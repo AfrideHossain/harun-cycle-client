@@ -1,0 +1,60 @@
+/* importing manrope font from google font api */
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
+  font-family: "Manrope", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+/* custom classes to prevent repeating tailwind classes */
+* {
+  box-sizing: border-box;
+}
+body {
+  padding: 16px;
+  /* background-color: #e5e5e5; */
+  /* @apply bg-gray-50; */
+  /* @apply bg-white; */
+  /* @apply bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 py-8; */
+  /* @apply bg-gradient-to-r from-gray-800 via-gray-700 to-gray-600 py-8; */
+  @apply bg-gradient-to-r from-blue-900 via-violet-900 to-purple-900;
+}
+.tile {
+  @apply container bg-[#DADADA] rounded-lg p-4 h-[71px] w-fit;
+}
+.primary-btn {
+  @apply container bg-[#5D62B5] border border-[#5D62B5] rounded-lg p-5 h-[71px] w-fit hover:bg-none;
+}
+.err-primary-btn {
+  @apply md:block bg-gradient-to-r from-[#7E90FE] to-[#9873FF] rounded-lg px-8 py-4 text-white font-extrabold outline-none;
+}
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-[#7E90FE] to-[#9873FF];
+}
+.link-hover {
+  @apply hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-[#7E90FE] hover:to-[#9873FF] hover:transition-all hover:duration-300;
+}
+.btn-blue {
+  @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
+}
+
+.btn-gray {
+  @apply bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded;
+}
+
+.input-field {
+  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-inner;
+}
+.label {
+  @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
+}

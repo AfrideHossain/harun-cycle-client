@@ -1,0 +1,151 @@
+/* Set page size and margins */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+/* Add some padding to the page content */
+/* body {
+  padding: 1.5cm;
+  background-color: #fff;
+} */
+.invoice_continer {
+  /* margin-top: 20px; */
+  background-color: #fff;
+  padding: 1cm;
+  border-radius: 8px;
+}
+/* Define the invoice header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  /* padding-bottom: 10px; */
+  margin-bottom: 10px;
+}
+
+.header h1 {
+  font-size: 24pt;
+  font-weight: 700;
+}
+
+.header h2 {
+  font-size: 18pt;
+  font-weight: 600;
+}
+
+.date-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  font-size: 11pt;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Define the invoice details */
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5cm;
+}
+
+.details p {
+  font-weight: 500;
+  font-size: 10pt;
+  margin: 5px 0;
+}
+
+.payto {
+  text-align: right;
+}
+
+/* Define the invoice table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0.5cm;
+  font-size: 11pt;
+}
+
+.left-td {
+  text-align: left;
+}
+
+/* Define the table header */
+th {
+  border: 1px solid #bbbbbb;
+  padding: 2px 5px;
+  background-color: #ddd;
+}
+
+/* Define the table rows */
+tr {
+  border: 1px solid #bbbbbb;
+}
+
+/* Define the table cells */
+td {
+  border: 1px solid #bbbbbb;
+  padding: 2px 5px;
+  text-align: center;
+}
+
+/* Define the invoice total */
+.total {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.signature {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 1.5cm;
+  padding: 10px;
+}
+
+.signature p {
+  padding: 0 30px;
+  text-align: center;
+  border-top: 2px solid #000;
+}
+
+/* Define the footer */
+.footer {
+  font-size: 8pt;
+  text-align: center;
+  margin-top: 0.5cm;
+}
+
+/* print button */
+.print-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.print-button:hover {
+  background-color: #45a049;
+}
+
+.print-button:active {
+  background-color: #3d8b40;
+}

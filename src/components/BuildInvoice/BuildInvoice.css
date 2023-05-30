@@ -1,0 +1,79 @@
+.container {
+  @apply mx-auto;
+}
+
+h1 {
+  @apply text-center mb-5 text-3xl text-gray-700;
+}
+
+form {
+  @apply relative bg-white p-5 rounded-lg shadow-md;
+}
+
+label {
+  @apply block text-lg font-bold mb-5;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+select {
+  @apply w-full p-3 border border-gray-300 rounded text-base font-semibold text-gray-700 outline-none;
+}
+
+textarea {
+  @apply w-full p-3 mb-5 border border-gray-300 rounded text-base font-semibold text-gray-700 outline-none resize-none;
+}
+
+.btn-submit-1 {
+  @apply bg-green-500 text-white px-5 py-3 rounded font-bold text-lg cursor-pointer transition duration-300 ease-in-out;
+}
+
+.btn-submit-1:hover {
+  @apply bg-green-600;
+}
+
+.btn-submit {
+  @apply bg-gradient-to-r from-red-500 to-red-300 text-white px-5 py-3 rounded font-bold text-lg cursor-pointer transition duration-300 ease-in-out;
+}
+
+.btn-submit:hover {
+  @apply bg-gradient-to-r from-red-300 to-red-500;
+}
+
+.form-control {
+  @apply mb-5;
+}
+
+.product-details,
+.product-details-head {
+  @apply grid grid-cols-5 gap-5 items-center;
+}
+
+.product-details input[type="text"],
+.product-details input[type="number"] {
+  @apply w-full p-3 border border-gray-300 rounded text-base font-semibold text-gray-700;
+}
+
+#add-product-btn,
+.btn-dark {
+  @apply bg-gray-700 text-white border-none px-5 py-3 rounded font-bold text-lg cursor-pointer mb-5 transition duration-300 ease-in-out me-4;
+}
+
+#add-product-btn:hover,
+.btn-dark:hover {
+  @apply bg-gray-800;
+}
+
+.btn-red {
+  @apply bg-red-600 text-white border-none px-5 py-3 rounded font-bold text-lg cursor-pointer mb-5 transition duration-300 ease-in-out;
+}
+
+.btn-red:hover {
+  @apply bg-red-700;
+}
+
+.btn-info {
+  @apply hidden bg-blue-500 text-white border-none px-5 py-3 rounded font-bold text-lg cursor-pointer mb-5 transition duration-300 ease-in-out absolute right-20;
+}
