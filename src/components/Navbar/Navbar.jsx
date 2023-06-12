@@ -7,6 +7,7 @@ import {
   ArrowLeftOnRectangleIcon,
   CurrencyBangladeshiIcon,
   Cog6ToothIcon,
+  UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import haruncyclelogo from "../../assets/haruncyclelogo.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -33,9 +34,7 @@ const Navbar = () => {
           </Link>
           <div className="hidden md:block ml-4 text-gray-700">
             <h2 className="text-lg font-semibold">Dashboard</h2>
-            <p className="text-sm">
-              Manage your clients, employees, and income.
-            </p>
+            <p className="text-sm">Manage your clients and products.</p>
           </div>
         </div>
 
@@ -55,13 +54,21 @@ const Navbar = () => {
         </div>
 
         <nav className="hidden md:flex space-x-8">
+          <Link className="flex items-center space-x-2" to="/customers">
+            <UserGroupIcon className="h-6 w-6 text-gray-700" />
+            <div>
+              <h3 className="text-sm font-semibold text-gray-700">Customers</h3>
+            </div>
+          </Link>
           <div className="flex items-center space-x-2">
             <CurrencyBangladeshiIcon className="h-6 w-6 text-gray-700" />
             <div>
               <h3 className="text-sm font-semibold text-gray-700">
                 Today's income
               </h3>
-              <p className="text-lg font-bold text-gray-900">৳ {incomeToday}</p>
+              <p className="text-lg font-bold text-gray-900">
+                ৳ {incomeToday} Taka
+              </p>
             </div>
           </div>
 
@@ -90,7 +97,7 @@ const Navbar = () => {
                     Today's sell status
                   </h3>
                   <p className="text-lg font-bold text-gray-900">
-                    ৳ {incomeToday}
+                    ৳ {incomeToday} Taka
                   </p>
                 </div>
               </div>

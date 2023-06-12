@@ -2,11 +2,40 @@ import React from "react";
 import {
   CurrencyBangladeshiIcon,
   PencilSquareIcon,
+  TrashIcon,
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
-const Product = ({ product }) => {
-  const { id, name, brand, quantity, retail, wholesale, warranty } = product;
+const Product = ({ product, refetch }) => {
+  const { _id, name, brand, quantity, retail, wholesale, warranty } = product;
+  const token = Cookies.get("token");
+  const deleteProductHandler = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#00b330",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`${import.meta.env.VITE_BACKURL}/manage/deleteproduct/${id}`, {
+          method: "DELETE",
+          headers: {
+            "auth-token": token,
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            refetch(true);
+            Swal.fire("Deleted!", "Your product has been deleted.", "success");
+          });
+      }
+    });
+  };
   return (
     <div className="container relative flex gap-4 items-center bg-white border border-[#E8E8E8] rounded-lg w-full p-6">
       <div>
@@ -41,13 +70,21 @@ const Product = ({ product }) => {
           </p>
         </div>
       </div>
-      {/* button */}
-      <Link
-        className="absolute top-6 right-6 p-2 rounded-md border bg-gray-600"
-        to={`/updateproduct/${id}`}
-      >
-        <PencilSquareIcon className="h-5 w-5 text-white" />
-      </Link>
+      {/* buttons */}
+      <div className="absolute top-6 right-6 p-2 w-10 flex flex-col gap-2">
+        <button
+          onClick={() => deleteProductHandler(_id)}
+          className="rounded-md border bg-red-600 w-10 h-10 flex items-center justify-center"
+        >
+          <TrashIcon className="h-6 w-6 text-white" />
+        </button>
+        <Link
+          className="rounded-md border bg-cyan-600 w-10 h-10 flex items-center justify-center"
+          to={`/updateproduct/${_id}`}
+        >
+          <PencilSquareIcon className="h-6 w-6 text-white" />
+        </Link>
+      </div>
     </div>
   );
 };

@@ -1,3 +1,7 @@
+/* importing notosans bangla */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@200;300;400;500;600;700;800;900&display=swap");
+/* importing solaiman lipi font from internet */
+@import url("https://fonts.maateen.me/solaiman-lipi/font.css");
 /* Set page size and margins */
 @page {
   size: A4;
@@ -14,6 +18,8 @@
   background-color: #fff;
   padding: 1cm;
   border-radius: 8px;
+  /* font-family: "Noto Sans Bengali", sans-serif; */
+  font-family: "SolaimanLipi", sans-serif;
 }
 /* Define the invoice header */
 .header {

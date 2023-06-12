@@ -20,9 +20,9 @@ import AuthContextProvider from "./components/Context/AuthContextProvider";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import PrintInvoice from "./components/PrintInvoice/PrintInvoice";
 import Cookies from "js-cookie";
-import { data } from "autoprefixer";
 import Products from "./components/Products/Products";
 import UpdateProduct from "./components/UpdateProduct/UpdateProduct";
+import AllCustomers from "./components/AllCustomers/AllCustomers";
 
 const mainUrl = import.meta.env.VITE_BACKURL;
 const token = Cookies.get("token");
@@ -58,6 +58,27 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/customerinfo/:id",
+        element: (
+          <PrivateRoute>
+            <CustomerInfo />
+          </PrivateRoute>
+        ),
+        loader: async ({ params }) => {
+          let customer = await fetch(
+            `${mainUrl}/manageclient/client/${params.id}`,
+            {
+              method: "GET",
+              headers: {
+                "auth-token": token,
+              },
+            }
+          );
+          let customerJson = await customer.json();
+          return customerJson.client;
+        },
+      },
+      {
         path: "/customerinfo",
         element: (
           <PrivateRoute>
@@ -89,7 +110,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: async ({ params }) => {
-          let loadData = fetch(`${mainUrl}/manage//product/${params.id}`, {
+          let loadData = fetch(`${mainUrl}/manage/product/${params.id}`, {
             method: "GET",
             headers: {
               "auth-token": token,
@@ -106,16 +127,14 @@ const router = createBrowserRouter([
             <Products />
           </PrivateRoute>
         ),
-        loader: async () => {
-          let loadData = fetch(`${mainUrl}/manage/allproducts`, {
-            method: "GET",
-            headers: {
-              "auth-token": token,
-            },
-          });
-          let fetchedData = (await loadData).json();
-          return fetchedData;
-        },
+      },
+      {
+        path: "/customers",
+        element: (
+          <PrivateRoute>
+            <AllCustomers />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/buildinvoice",

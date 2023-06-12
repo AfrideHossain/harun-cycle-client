@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   UserCircleIcon,
   CurrencyBangladeshiIcon,
@@ -6,14 +6,18 @@ import {
 } from "@heroicons/react/24/outline";
 import Cookies from "js-cookie";
 import Loading from "../Shared/Loading";
+import { useLoaderData } from "react-router-dom";
+import History from "../History/History";
 
 const CustomerInfo = () => {
   const [customerId, setCustomerId] = useState("");
+  const [histories, setHistories] = useState([]);
   const token = Cookies.get("token");
   const mainUrl = import.meta.env.VITE_BACKURL;
   const [error, setError] = useState("");
-  const [customer, setCustomer] = useState(null);
   const [loading, setLoading] = useState(false);
+  const customerInfo = useLoaderData();
+  const [customer, setCustomer] = useState(customerInfo || null);
 
   const searchClientHandler = (id) => {
     setLoading(true);
@@ -26,7 +30,7 @@ const CustomerInfo = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          setCustomer(data.client[0]);
+          setCustomer(data.client);
         } else {
           setError(`User not found with id ${id}`);
         }
@@ -37,6 +41,24 @@ const CustomerInfo = () => {
         setLoading(false);
       });
   };
+
+  useEffect(() => {
+    fetch(
+      `${import.meta.env.VITE_BACKURL}/manageclient/customerHistory/${
+        customer?._id
+      }`,
+      {
+        method: "GET",
+        headers: {
+          "auth-token": token,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        setHistories(result.allHistory);
+      });
+  }, [customer]);
   return (
     <>
       {loading && <Loading />}
@@ -131,6 +153,15 @@ const CustomerInfo = () => {
           Modify
         </button> */}
         </div>
+      </div>
+      <h1 className="mt-5 w-fit mx-auto text-lg sm:text-xl text-center font-semibold text-gray-200 items-center border-b py-3 px-8">
+        Customer's History
+      </h1>
+      <div className="space-y-2">
+        {histories &&
+          histories?.map((history) => (
+            <History key={history._id} history={history} />
+          ))}
       </div>
     </>
   );

@@ -3,6 +3,9 @@ import Cookies from "js-cookie";
 import Loading from "../Shared/Loading";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContextProvider";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+import cycleRunning from "../../assets/cyclerun.gif";
 
 const Login = () => {
   const [error, setError] = useState("");
@@ -17,7 +20,6 @@ const Login = () => {
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(loading);
     let authResult = await fetch(
       `${import.meta.env.VITE_BACKURL}/auth/login/`,
       {
@@ -34,6 +36,14 @@ const Login = () => {
       Cookies.set("token", resp.authToken, { expires: 1 });
       setUser(userInfo);
       setLoading(false);
+      Swal.fire({
+        title: "Welcome back chief 🫡",
+        imageUrl:
+          "https://i.ibb.co/ZGwQGZC/image-processing20200312-31646-16wf0mc.gif",
+        imageWidth: "300px",
+        timer: 2000,
+        showConfirmButton: false,
+      });
     } else {
       setError("Incorrect email or password");
       toast.error("Oops🤧, Invalid credentials");
