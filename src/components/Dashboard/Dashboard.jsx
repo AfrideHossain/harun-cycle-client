@@ -7,15 +7,19 @@ import {
   DocumentPlusIcon,
   Cog6ToothIcon,
   CubeIcon,
+  UserGroupIcon,
 } from "@heroicons/react/24/outline";
 // solid icons
 import { EyeIcon } from "@heroicons/react/24/solid";
 import Statistics from "../Statistics/Statistics";
 import Cookies from "js-cookie";
 import { AuthContext } from "../Context/AuthContextProvider";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Loading from "../Shared/Loading";
+<<<<<<< HEAD
 import { data } from "autoprefixer";
+=======
+>>>>>>> 4c4259ac8f6d7c948766b1d64b5d323356edb25e
 import { toast } from "react-toastify";
 const Dashboard = () => {
   // const [incomeToday, setIncomeToday] = useState(0);
@@ -114,13 +118,13 @@ const Dashboard = () => {
     loadStock
       .then((res) => res.json())
       .then((data) => {
-        let totalStockValue = 0;
+        /* let totalStockValue = 0;
         let fullStock = data.allProducts;
         fullStock.map((stock) => {
           totalStockValue += stock.total_cost;
         });
-        // console.log(totalStockValue);
-        setStockPrice(totalStockValue);
+        // console.log(totalStockValue); */
+        setStockPrice(data.stockValue);
       });
   }, []);
   return (
@@ -182,10 +186,10 @@ const Dashboard = () => {
           </div>
           <div className="ml-4">
             <div className="text-lg font-medium text-gray-700">
-              Today's Sell Status
+              Today's Current Sell Status
             </div>
             <div className="text-2xl font-semibold text-gray-900">
-              {incomeToday}
+              {incomeToday} Taka
             </div>
           </div>
           <button className="absolute top-2 right-2" onClick={fetchIncome}>
@@ -229,7 +233,6 @@ const Dashboard = () => {
               <div className="text-lg font-medium text-gray-700">
                 View Client Info
               </div>
-              <div className="text-lg font-semibold text-gray-900"></div>
             </div>
           </Link>
 

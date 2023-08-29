@@ -22,6 +22,7 @@ import PrintInvoice from "./components/PrintInvoice/PrintInvoice";
 import Cookies from "js-cookie";
 import Products from "./components/Products/Products";
 import UpdateProduct from "./components/UpdateProduct/UpdateProduct";
+import AllCustomers from "./components/AllCustomers/AllCustomers";
 
 const mainUrl = import.meta.env.VITE_BACKURL;
 const token = Cookies.get("token");
@@ -55,6 +56,27 @@ const router = createBrowserRouter([
             <Dashboard />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/customerinfo/:id",
+        element: (
+          <PrivateRoute>
+            <CustomerInfo />
+          </PrivateRoute>
+        ),
+        loader: async ({ params }) => {
+          let customer = await fetch(
+            `${mainUrl}/manageclient/client/${params.id}`,
+            {
+              method: "GET",
+              headers: {
+                "auth-token": token,
+              },
+            }
+          );
+          let customerJson = await customer.json();
+          return customerJson.client;
+        },
       },
       {
         path: "/customerinfo",
@@ -105,16 +127,14 @@ const router = createBrowserRouter([
             <Products />
           </PrivateRoute>
         ),
-        loader: async () => {
-          let loadData = fetch(`${mainUrl}/manage/allproducts`, {
-            method: "GET",
-            headers: {
-              "auth-token": token,
-            },
-          });
-          let fetchedData = (await loadData).json();
-          return fetchedData;
-        },
+      },
+      {
+        path: "/customers",
+        element: (
+          <PrivateRoute>
+            <AllCustomers />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/buildinvoice",

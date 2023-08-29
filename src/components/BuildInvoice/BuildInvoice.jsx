@@ -9,13 +9,8 @@ import Cookies from "js-cookie";
 import { AuthContext } from "../Context/AuthContextProvider";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import Loading from "../Shared/Loading";
+import Swal from "sweetalert2";
 
-/* const products = [
-  { id: 1, name: "Product 1", price: 10, warranty: "1 year" },
-  { id: 2, name: "Product 2", price: 20, warranty: "2 years" },
-  { id: 3, name: "Product 3", price: 30, warranty: "3 years" },
-  // Add more products as needed
-]; */
 const BuildInvoice = () => {
   const token = Cookies.get("token");
   const mainUrl = import.meta.env.VITE_BACKURL;
@@ -93,6 +88,15 @@ const BuildInvoice = () => {
           };
           setInvoiceData(invoice);
           navigate("/invoice");
+        } else {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: `Insufficient stock`,
+            html: `<b>Product Name : </b> ${data.product.name} <br /><b>Available Quantity : </b> ${data.product.quantity} <br />`,
+            showConfirmButton: false,
+            timer: 5000,
+          });
         }
       });
   };
