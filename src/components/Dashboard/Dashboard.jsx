@@ -16,10 +16,6 @@ import Cookies from "js-cookie";
 import { AuthContext } from "../Context/AuthContextProvider";
 import { Link } from "react-router-dom";
 import Loading from "../Shared/Loading";
-<<<<<<< HEAD
-import { data } from "autoprefixer";
-=======
->>>>>>> 4c4259ac8f6d7c948766b1d64b5d323356edb25e
 import { toast } from "react-toastify";
 import WarningBox from "../Warning/WarningBox";
 const Dashboard = () => {
