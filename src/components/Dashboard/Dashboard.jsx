@@ -17,6 +17,7 @@ import { AuthContext } from "../Context/AuthContextProvider";
 import { Link } from "react-router-dom";
 import Loading from "../Shared/Loading";
 import { toast } from "react-toastify";
+import WarningBox from "../Warning/WarningBox";
 const Dashboard = () => {
   // const [incomeToday, setIncomeToday] = useState(0);
   const { incomeToday, setIncomeToday } = useContext(AuthContext);
@@ -194,7 +195,9 @@ const Dashboard = () => {
           </button>
         </div>
       </div>
-
+      <div className="bg-white shadow-sm rounded-lg p-4 mt-4 w-full">
+        <WarningBox />
+      </div>
       {/* graph and buttons */}
       <div className="grid gap-4 grid-cols-1 md:grid-cols-4 xl:grid-cols-4 mt-4">
         {/* graph component */}
