@@ -24,6 +24,13 @@ const Products = () => {
   }, [refetch]);
   return (
     <div className="container mt-5">
+<<<<<<< HEAD
+      <div className="grid md:grid-cols-2 mx-auto gap-3">
+        {products?.map((product) => (
+          <Product key={product._id} product={product} />
+        ))}
+      </div>
+=======
       {loading ? (
         <Loading />
       ) : (
@@ -33,6 +40,7 @@ const Products = () => {
           ))}
         </div>
       )}
+>>>>>>> 4c4259ac8f6d7c948766b1d64b5d323356edb25e
     </div>
   );
 };
