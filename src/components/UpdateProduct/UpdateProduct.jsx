@@ -25,7 +25,7 @@ const UpdateProduct = () => {
       retail,
       wholesale,
     };
-    fetch(`${mainUrl}/manage/product/${product.id}`, {
+    fetch(`${mainUrl}/manage/product/${product._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +36,9 @@ const UpdateProduct = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          toast.success("Yaay 🤩, Product Upadated")
+          toast.success("Yaay 🤩, Product Upadated");
+        } else {
+          toast.error("🙂 Add necessery changes to update product");
         }
       });
   };

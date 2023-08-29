@@ -16,6 +16,7 @@ import { AuthContext } from "../Context/AuthContextProvider";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "../Shared/Loading";
 import { data } from "autoprefixer";
+import { toast } from "react-toastify";
 const Dashboard = () => {
   // const [incomeToday, setIncomeToday] = useState(0);
   const { incomeToday, setIncomeToday } = useContext(AuthContext);
@@ -44,7 +45,13 @@ const Dashboard = () => {
       .then((resp) => resp.json())
       .then((data) => {
         // console.log(data);
-        setIncomeToday(data.totalIncome);
+        if (data.success) {
+          setIncomeToday(data.totalIncome);
+          toast.success(`💸 Chief, Your today's income ৳${data.totalIncome}`);
+        } else {
+          setIncomeToday(0);
+          toast.success(`😓 Sorry Chief, ${data.msg}`);
+        }
         setLoading(false);
       });
   };
@@ -61,8 +68,10 @@ const Dashboard = () => {
       .then((data) => {
         console.log(data);
         if (data.success) {
-          setLogMessage(`Password updated for user id ${data.data[0]?.uid}`);
+          toast.success("Password updated, Chief 🫡");
+          setLogMessage(`Password updated, chief 🫡`);
         } else {
+          toast.error("😓 Sorry chief, failed to update password.");
           setLogMessage(`${data.error}`);
         }
         setPassword("");

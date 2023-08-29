@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Cookies from "js-cookie";
 import { AuthContext } from "../Context/AuthContextProvider";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import Loading from "../Shared/Loading";
 
 /* const products = [
@@ -45,13 +45,13 @@ const BuildInvoice = () => {
 
   const handleProductChange = (index, productId) => {
     const selectedProduct = products.find(
-      (product) => product.id === productId
+      (product) => product._id === productId
     );
     if (selectedProduct) {
       const updatedItems = [...purchaseItems];
       updatedItems[index] = {
         ...updatedItems[index],
-        productId: selectedProduct.id,
+        productId: selectedProduct._id,
         name: selectedProduct.name,
         price: selectedProduct.retail,
         warranty: selectedProduct.warranty,
@@ -84,11 +84,12 @@ const BuildInvoice = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
+          console.log(data);
           let invoice = {
             ...bodydata,
             date: data.date,
             invoiceNumber: data.invoiceNumber,
-            clientId: data.clientId,
+            clientId: data._id,
           };
           setInvoiceData(invoice);
           navigate("/invoice");
@@ -117,6 +118,7 @@ const BuildInvoice = () => {
 
   // searchClientHandler function
   const searchClientHandler = (id) => {
+    setError("");
     setLoading(true);
     fetch(`${mainUrl}/manageclient/client/${id}`, {
       method: "GET",
@@ -127,14 +129,9 @@ const BuildInvoice = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          let {
-            clientId,
-            clientName,
-            clientPhone,
-            clientAddress,
-            clientDueAmount,
-          } = data.client[0];
-          setCustomerId("" + clientId);
+          let { _id, clientName, clientPhone, clientAddress, clientDueAmount } =
+            data.client;
+          setCustomerId("" + _id);
           setFullName(clientName);
           setPhone(clientPhone);
           setAddress(clientAddress);
@@ -168,9 +165,27 @@ const BuildInvoice = () => {
     <div className="container mt-5">
       {loading && <Loading />}
       {window.innerWidth < 662 ? (
-        <p className="text-base text-red-600 font-medium form-control text-center">
-          Use a computer to make invoice
-        </p>
+        <>
+          <div className="flex flex-col items-center justify-center min-h-screen bg-white rounded-lg">
+            <img
+              src="https://i.ibb.co/xSBvYV5/sysadmin-03-removebg-preview.png" // Replace with the actual path to your image
+              alt="404 Not Found"
+              className="mb-8 w-64 sm:w-96 animate-pulse"
+            />
+            <h1 className="text-4xl sm:text-6xl font-bold text-gray-800 mb-4">
+              Oops!
+            </h1>
+            <p className="text-lg sm:text-xl text-gray-800 mb-8 text-center px-4 sm:px-8">
+              Please consider using a computer to create invoices.
+            </p>
+            <Link
+              to="/"
+              className="px-6 py-3 rounded-md bg-blue-500 text-white font-bold shadow-lg hover:bg-blue-600 focus:outline-none transition-colors duration-300 ease-in-out"
+            >
+              Go Back to Home
+            </Link>
+          </div>
+        </>
       ) : (
         <form id="bill-form" onSubmit={handleSubmit}>
           <h1 className="font-bold">Invoice Form</h1>
@@ -249,13 +264,11 @@ const BuildInvoice = () => {
                 <div className="form-control">
                   <select
                     value={item.productId || ""}
-                    onChange={(e) =>
-                      handleProductChange(index, parseInt(e.target.value))
-                    }
+                    onChange={(e) => handleProductChange(index, e.target.value)}
                   >
                     <option value="">Select a product</option>
                     {products.map((product) => (
-                      <option key={product.id} value={product.id}>
+                      <option key={product._id} value={product._id}>
                         {product.name}
                       </option>
                     ))}

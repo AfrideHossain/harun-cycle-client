@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 const AddProduct = () => {
   const mainUrl = import.meta.env.VITE_BACKURL;
   const token = Cookies.get("token");

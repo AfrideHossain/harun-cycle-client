@@ -6,7 +6,7 @@ import {
 import { Link } from "react-router-dom";
 
 const Product = ({ product }) => {
-  const { id, name, brand, quantity, retail, wholesale, warranty } = product;
+  const { _id, name, brand, quantity, retail, wholesale, warranty } = product;
   return (
     <div className="container relative flex gap-4 items-center bg-white border border-[#E8E8E8] rounded-lg w-full p-6">
       <div>
@@ -44,7 +44,7 @@ const Product = ({ product }) => {
       {/* button */}
       <Link
         className="absolute top-6 right-6 p-2 rounded-md border bg-gray-600"
-        to={`/updateproduct/${id}`}
+        to={`/updateproduct/${_id}`}
       >
         <PencilSquareIcon className="h-5 w-5 text-white" />
       </Link>

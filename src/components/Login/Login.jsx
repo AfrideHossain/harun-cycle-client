@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import Loading from "../Shared/Loading";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContextProvider";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [error, setError] = useState("");

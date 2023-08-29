@@ -26,7 +26,7 @@ const CustomerInfo = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          setCustomer(data.client[0]);
+          setCustomer(data.client);
         } else {
           setError(`User not found with id ${id}`);
         }

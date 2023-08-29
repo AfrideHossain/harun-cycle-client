@@ -20,7 +20,6 @@ import AuthContextProvider from "./components/Context/AuthContextProvider";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import PrintInvoice from "./components/PrintInvoice/PrintInvoice";
 import Cookies from "js-cookie";
-import { data } from "autoprefixer";
 import Products from "./components/Products/Products";
 import UpdateProduct from "./components/UpdateProduct/UpdateProduct";
 
@@ -89,7 +88,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: async ({ params }) => {
-          let loadData = fetch(`${mainUrl}/manage//product/${params.id}`, {
+          let loadData = fetch(`${mainUrl}/manage/product/${params.id}`, {
             method: "GET",
             headers: {
               "auth-token": token,
