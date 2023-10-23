@@ -47,6 +47,10 @@ const AllCustomers = () => {
     setLoading(false);
   }, []);
 
+  const handleUserDelete = (id) => {
+    console.log("Now I am an independent function.");
+  };
+
   return (
     <>
       <div className="mt-6 flex justify-center items-center gap-2 p-1 rounded text-base font-semibold text-gray-700 mx-4 sm:mx-auto bg-slate-300 w-fit">
@@ -154,12 +158,20 @@ const AllCustomers = () => {
                         {customer.clientDueAmount}
                       </td>
                       <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                        <Link
-                          to={`/customerinfo/${customer._id}`}
-                          className="font-medium text-white bg-indigo-600 p-2 rounded"
-                        >
-                          View
-                        </Link>
+                        <div className="grid md:grid-cols-2 gap-2">
+                          <Link
+                            to={`/customerinfo/${customer._id}`}
+                            className="font-medium text-white bg-indigo-600 p-2 rounded hover:bg-indigo-500"
+                          >
+                            View
+                          </Link>
+                          <button
+                            className="btn font-medium text-white bg-red-600 p-2 rounded hover:bg-red-500"
+                            onClick={() => handleUserDelete(customer._id)}
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -171,8 +183,8 @@ const AllCustomers = () => {
       </div>
       <div className="sticky bottom-0 left-0 mt-2 flex justify-center items-center gap-2 p-5 rounded text-sm text-gray-900 mx-4 sm:mx-auto bg-slate-300 bg-opacity-90 w-64">
         <p className="text-justify font-bold">
-          After searching customers by phone number if you want to see all customer's again.
-          Then please refresh the page.
+          After searching customers by phone number if you want to see all
+          customer's again. Then please refresh the page.
         </p>
       </div>
     </>

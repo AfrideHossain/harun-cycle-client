@@ -8,10 +8,6 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 
-<<<<<<< HEAD
-const Product = ({ product }) => {
-  const { _id, name, brand, quantity, retail, wholesale, warranty } = product;
-=======
 const Product = ({ product, refetch }) => {
   const { _id, name, brand, quantity, retail, wholesale, warranty } = product;
   const token = Cookies.get("token");
@@ -40,7 +36,6 @@ const Product = ({ product, refetch }) => {
       }
     });
   };
->>>>>>> 4c4259ac8f6d7c948766b1d64b5d323356edb25e
   return (
     <div className="container relative flex gap-4 items-center bg-white border border-[#E8E8E8] rounded-lg w-full p-6">
       <div>
@@ -75,15 +70,6 @@ const Product = ({ product, refetch }) => {
           </p>
         </div>
       </div>
-<<<<<<< HEAD
-      {/* button */}
-      <Link
-        className="absolute top-6 right-6 p-2 rounded-md border bg-gray-600"
-        to={`/updateproduct/${_id}`}
-      >
-        <PencilSquareIcon className="h-5 w-5 text-white" />
-      </Link>
-=======
       {/* buttons */}
       <div className="absolute top-6 right-6 p-2 w-10 flex flex-col gap-2">
         <button
@@ -99,7 +85,6 @@ const Product = ({ product, refetch }) => {
           <PencilSquareIcon className="h-6 w-6 text-white" />
         </Link>
       </div>
->>>>>>> 4c4259ac8f6d7c948766b1d64b5d323356edb25e
     </div>
   );
 };

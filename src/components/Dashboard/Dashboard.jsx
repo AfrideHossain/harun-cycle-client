@@ -195,9 +195,10 @@ const Dashboard = () => {
           </button>
         </div>
       </div>
-      <div className="bg-white shadow-sm rounded-lg p-4 mt-4 w-full">
+      {/* Warning box hidden */}
+      {/* <div className="bg-white shadow-sm rounded-lg p-4 mt-4 w-full">
         <WarningBox />
-      </div>
+      </div> */}
       {/* graph and buttons */}
       <div className="grid gap-4 grid-cols-1 md:grid-cols-4 xl:grid-cols-4 mt-4">
         {/* graph component */}

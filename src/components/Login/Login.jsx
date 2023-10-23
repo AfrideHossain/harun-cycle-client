@@ -4,11 +4,8 @@ import Loading from "../Shared/Loading";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContextProvider";
 import { toast } from "react-toastify";
-<<<<<<< HEAD
-=======
 import Swal from "sweetalert2";
 import cycleRunning from "../../assets/cyclerun.gif";
->>>>>>> 4c4259ac8f6d7c948766b1d64b5d323356edb25e
 
 const Login = () => {
   const [error, setError] = useState("");
