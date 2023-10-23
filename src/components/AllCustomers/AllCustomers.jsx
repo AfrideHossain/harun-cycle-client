@@ -76,11 +76,7 @@ const AllCustomers = () => {
           .then((data) => {
             if (data.success) {
               setRefetch(true);
-              Swal.fire(
-                "Deleted!",
-                "Your product has been deleted.",
-                "success"
-              );
+              Swal.fire("Deleted!", "The user has been deleted.", "success");
             } else {
               Swal.fire("Failed", "Failed to delete the user", "error");
             }
