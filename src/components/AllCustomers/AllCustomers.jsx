@@ -2,6 +2,7 @@ import { UserIcon } from "@heroicons/react/24/outline";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AllCustomers = () => {
   const [customers, setCustomers] = useState([]);
@@ -10,6 +11,7 @@ const AllCustomers = () => {
   const mainUrl = import.meta.env.VITE_BACKURL;
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [refetch, setRefetch] = useState(false);
 
   const searchClientHandler = (phone) => {
     setLoading(true);
@@ -43,12 +45,56 @@ const AllCustomers = () => {
       .then((res) => res.json())
       .then((data) => {
         setCustomers(data.allCustomers);
+        setRefetch(false);
       });
     setLoading(false);
-  }, []);
+  }, [refetch]);
 
   const handleUserDelete = (id) => {
-    console.log("Now I am an independent function.");
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      reverseButtons: true,
+      confirmButtonColor: "#00b330",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, keep it",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(
+          `${import.meta.env.VITE_BACKURL}/manageclient/deletecustomer/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "auth-token": token,
+            },
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success) {
+              setRefetch(true);
+              Swal.fire(
+                "Deleted!",
+                "Your product has been deleted.",
+                "success"
+              );
+            } else {
+              Swal.fire("Failed", "Failed to delete the user", "error");
+            }
+          })
+          .catch(() => {
+            Swal.fire(
+              "Sorry!",
+              "Something went wrong, Please try again later. ",
+              "warning"
+            );
+          });
+        // Swal.fire("Deleted!", "The user has been deleted.", "success");
+      }
+    });
   };
 
   return (

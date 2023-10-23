@@ -17,7 +17,7 @@ import { AuthContext } from "../Context/AuthContextProvider";
 import { Link } from "react-router-dom";
 import Loading from "../Shared/Loading";
 import { toast } from "react-toastify";
-import WarningBox from "../Warning/WarningBox";
+// import WarningBox from "../Warning/WarningBox";
 const Dashboard = () => {
   // const [incomeToday, setIncomeToday] = useState(0);
   const { incomeToday, setIncomeToday } = useContext(AuthContext);
