@@ -79,7 +79,7 @@ const BuildInvoice = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          console.log(data);
+          // console.log(data);
           let invoice = {
             ...bodydata,
             date: data.date,
@@ -146,7 +146,7 @@ const BuildInvoice = () => {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         setLoading(false);
       });
   };
