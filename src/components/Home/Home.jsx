@@ -1,10 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "../Footer/Footer";
 
 const Home = () => {
+  const currentPath = useLocation();
   return (
     <>
       <Navbar />
@@ -22,6 +24,7 @@ const Home = () => {
         theme="light"
       />
       <Outlet />
+      {currentPath.pathname !== "/login" && <Footer />}
     </>
   );
 };

@@ -141,7 +141,7 @@ const BuildInvoice = () => {
           setAddress(clientAddress);
           setDue(clientDueAmount);
         } else {
-          setError(`User not found with id ${id}`);
+          setError(`User not found with phone number ${id}`);
         }
         setLoading(false);
       })
@@ -197,18 +197,19 @@ const BuildInvoice = () => {
             <UserIcon className="w-8 mx-2" />
             <input
               type="text"
-              id="customer-id"
+              id="customer_phone"
               className="border-none"
-              value={customerId}
-              placeholder="Customer id (if customer already exist)"
+              value={phone}
+              // placeholder="Phone Number (if customer already exist)"
+              placeholder="Enter phone number if customer already exist (e.g. 01XXXXXXXXX)"
               onChange={(e) => {
-                setCustomerId(e.target.value);
+                setPhone(e.target.value);
               }}
             />
             <button
               className="bg-gray-700 text-white border-none px-5 py-3 rounded font-bold text-lg cursor-pointer transition duration-300 ease-in-out"
               type="button"
-              onClick={() => searchClientHandler(customerId)}
+              onClick={() => searchClientHandler(phone)}
             >
               Search
             </button>
