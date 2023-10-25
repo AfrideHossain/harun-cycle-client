@@ -121,10 +121,10 @@ const BuildInvoice = () => {
   };
 
   // searchClientHandler function
-  const searchClientHandler = (id) => {
+  const searchClientHandler = (phone) => {
     setError("");
     setLoading(true);
-    fetch(`${mainUrl}/manageclient/client/${id}`, {
+    fetch(`${mainUrl}/manageclient/client/${phone}`, {
       method: "GET",
       headers: {
         "auth-token": token,
@@ -140,9 +140,9 @@ const BuildInvoice = () => {
           setPhone(clientPhone);
           setAddress(clientAddress);
           setDue(clientDueAmount);
-        } else {
-          setError(`User not found with phone number ${id}`);
-        }
+        } /* else {
+          setError(`User not found with phone number ${phone}`);
+        } */
         setLoading(false);
       })
       .catch((err) => {
@@ -150,6 +150,59 @@ const BuildInvoice = () => {
         setLoading(false);
       });
   };
+
+  const handlePhoneOnBlur = (phone) => {
+    setLoading(true);
+    fetch(`${mainUrl}/manageclient/client/${phone}`, {
+      method: "GET",
+      headers: {
+        "auth-token": token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setLoading(false);
+          Swal.fire({
+            title: "Continue with existing customer?",
+            text: "There is already a customer with the same phone number.",
+            icon: "question",
+            showCancelButton: true,
+            reverseButtons: true,
+            confirmButtonColor: "#00b330",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Continue!",
+            cancelButtonText: "No, Try again",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              let {
+                _id,
+                clientName,
+                clientPhone,
+                clientAddress,
+                clientDueAmount,
+              } = data.client;
+              setCustomerId("" + _id);
+              setFullName(clientName);
+              setPhone(clientPhone);
+              setAddress(clientAddress);
+              setDue(clientDueAmount);
+            } else {
+              setCustomerId("");
+              setFullName("");
+              setPhone("");
+            }
+          });
+        } /* else {
+          setError(`User not found with phone number ${phone}`);
+        } */
+      })
+      .catch((err) => {
+        // console.log(err);
+        setLoading(false);
+      });
+  };
+
   useEffect(() => {
     let totalAmount = due;
     purchaseItems.map((item) => {
@@ -238,6 +291,9 @@ const BuildInvoice = () => {
               required
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              onBlur={(e) => {
+                handlePhoneOnBlur(phone);
+              }}
             />
           </div>
           <div className="form-control">
