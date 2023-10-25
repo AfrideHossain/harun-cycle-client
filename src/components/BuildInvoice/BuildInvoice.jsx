@@ -161,6 +161,7 @@ const BuildInvoice = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        setLoading(false);
         if (data.success) {
           setLoading(false);
           Swal.fire({
