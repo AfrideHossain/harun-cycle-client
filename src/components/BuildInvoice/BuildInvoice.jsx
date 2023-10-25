@@ -166,7 +166,7 @@ const BuildInvoice = () => {
           Swal.fire({
             title: "Continue with existing customer?",
             text: "There is already a customer with the same phone number.",
-            icon: "question",
+            icon: "warning",
             showCancelButton: true,
             reverseButtons: true,
             confirmButtonColor: "#00b330",
