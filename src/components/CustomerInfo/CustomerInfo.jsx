@@ -10,7 +10,8 @@ import { useLoaderData } from "react-router-dom";
 import History from "../History/History";
 
 const CustomerInfo = () => {
-  const [customerId, setCustomerId] = useState("");
+  // const [customerId, setCustomerId] = useState("");
+  const [customerPhone, setcustomerPhone] = useState("");
   const [histories, setHistories] = useState([]);
   const token = Cookies.get("token");
   const mainUrl = import.meta.env.VITE_BACKURL;
@@ -19,9 +20,9 @@ const CustomerInfo = () => {
   const customerInfo = useLoaderData();
   const [customer, setCustomer] = useState(customerInfo || null);
 
-  const searchClientHandler = (id) => {
+  const searchClientHandler = (phone) => {
     setLoading(true);
-    fetch(`${mainUrl}/manageclient/client/${id}`, {
+    fetch(`${mainUrl}/manageclient/client/${phone}`, {
       method: "GET",
       headers: {
         "auth-token": token,
@@ -32,7 +33,7 @@ const CustomerInfo = () => {
         if (data.success) {
           setCustomer(data.client);
         } else {
-          setError(`User not found with id ${id}`);
+          setError(`User not found with phone number ${phone}`);
         }
         setLoading(false);
       })
@@ -78,18 +79,18 @@ const CustomerInfo = () => {
             <UserIcon className="w-8 mx-2" />
             <input
               type="text"
-              id="customer-id"
+              id="customer-pho"
               className="border-none"
-              value={customerId}
-              placeholder="Customer id"
+              value={customerPhone}
+              placeholder="Customer Phone Number"
               onChange={(e) => {
-                setCustomerId(e.target.value);
+                setcustomerPhone(e.target.value);
               }}
             />
             <button
               className="bg-gray-700 text-white border-none px-5 py-3 rounded font-bold text-lg cursor-pointer transition duration-300 ease-in-out"
               type="button"
-              onClick={() => searchClientHandler(customerId)}
+              onClick={() => searchClientHandler(customerPhone)}
             >
               Search
             </button>

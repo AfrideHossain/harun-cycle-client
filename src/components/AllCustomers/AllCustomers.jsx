@@ -204,7 +204,7 @@ const AllCustomers = () => {
                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                           <div className="grid md:grid-cols-2 gap-2">
                             <Link
-                              to={`/customerinfo/${customer._id}`}
+                              to={`/customerinfo/${customer.clientPhone}`}
                               className="font-medium text-white bg-indigo-600 p-2 rounded hover:bg-indigo-500"
                             >
                               View
