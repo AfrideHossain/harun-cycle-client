@@ -1,14 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./invoice.css";
 import { AuthContext } from "../Context/AuthContextProvider";
+import { Helmet } from "react-helmet";
 
 const Invoice = React.forwardRef((props, ref) => {
   const { invoiceData } = useContext(AuthContext);
+  // useEffect(() => {
+  //   document.title = `Harun Cycle Store ${invoiceData.invoiceNumber}`;
+  // }, []);
   return (
     <>
+      <Helmet>
+        <title>Harun Cycle Store {invoiceData.invoiceNumber}</title>
+      </Helmet>
       <div ref={ref} className="invoice_continer" id="invoice_continer">
         <div className="header">
-          <h1>Harun Cycle Store</h1>
+          <h1 className="text-black">Harun Cycle Store</h1>
           <h2>Invoice</h2>
         </div>
 
@@ -24,10 +31,10 @@ const Invoice = React.forwardRef((props, ref) => {
         <div className="details">
           <div className="client">
             <strong>Invoiced To:</strong>
-            <p>
-              Customer ID : <span>{invoiceData.clientId}</span>
-            </p>
-            <p>{invoiceData.fullName}</p>
+            {/* <p>
+              <strong>Customer ID :</strong> <span>{invoiceData.clientId}</span>
+            </p> */}
+            <p className="semibold">{invoiceData.fullName}</p>
             <p>{invoiceData.address}</p>
             <p>
               <span>+880 </span>
@@ -36,7 +43,7 @@ const Invoice = React.forwardRef((props, ref) => {
           </div>
           <div className="payto">
             <strong>Pay To:</strong>
-            <p>Harun Cycle Store</p>
+            <p className="semibold">Harun Cycle Store</p>
             <p>Borogachi Bus Stand, Pangsha, Rajbari</p>
             <p>
               <span>+880 </span>1761748833, <span>+880 </span>1971748833
@@ -60,10 +67,20 @@ const Invoice = React.forwardRef((props, ref) => {
               {invoiceData.purchaseItems.map((product) => (
                 <tr key={product.name}>
                   <td className="left-td">{product.name}</td>
-                  <td className="left-td">{product.warranty}</td>
-                  <td>{product.quantity}</td>
-                  <td>{product.price} Taka</td>
-                  <td>{product.quantity * product.price} Taka</td>
+                  <td className="left-td">{product.warranty || "N/A"}</td>
+                  <td>{`${product.quantity} ${product.unit || ""}`}</td>
+                  <td className="text-right">
+                    {product.price
+                      .toString()
+                      .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                    Taka
+                  </td>
+                  <td className="text-right">
+                    {(product.quantity * product.price)
+                      .toString()
+                      .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                    Taka
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -73,35 +90,52 @@ const Invoice = React.forwardRef((props, ref) => {
         )}
         <div className="flex justify-between items-center px-3">
           {invoiceData.paid ? (
-            <p className="font-bold text-blue-900 text-5xl ps-10">Paid</p>
+            <p className="font-bold text-blue-900 text-2xl ps-10">Paid</p>
           ) : (
-            <p className="font-bold text-red-600 text-xl ps-10">
-              Due: {Math.abs(invoiceData.currentPayment - invoiceData.total)}{" "}
+            <p className="font-bold text-red-600 text-lg ps-10">
+              Due:{" "}
+              {Math.abs(invoiceData.currentPayment - invoiceData.total)
+                .toString()
+                .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}{" "}
               Taka
             </p>
           )}
           <div>
-            <div className="total mb-5">
+            <div className="total mb-2">
               <p>
                 <strong>Sub Total:</strong>{" "}
-                {Math.abs(invoiceData.due - invoiceData.total)} Taka
+                {Math.abs(invoiceData.due - invoiceData.total)
+                  .toString()
+                  .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                Taka
               </p>
             </div>
 
             <div className="total">
               <p>
-                <strong>Previous Due:</strong> {invoiceData.due} Taka
+                <strong>Previous Due:</strong>{" "}
+                {invoiceData.due
+                  .toString()
+                  .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                Taka
               </p>
             </div>
 
-            <div className="total border-b border-black pb-3">
+            <div className="total border-b border-black pb-1">
               <p>
-                <strong>Grand Total:</strong> {invoiceData.total} Taka
+                <strong>Grand Total:</strong>{" "}
+                {invoiceData.total
+                  .toString()
+                  .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                Taka
               </p>
             </div>
-            <div className="total mt-2">
+            <div className="total mt-1">
               <p>
-                <strong>Current payment:</strong> {invoiceData.currentPayment}{" "}
+                <strong>Current payment:</strong>{" "}
+                {invoiceData.currentPayment
+                  .toString()
+                  .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}{" "}
                 Taka
               </p>
             </div>

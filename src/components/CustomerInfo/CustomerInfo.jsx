@@ -61,7 +61,7 @@ const CustomerInfo = () => {
       });
   }, [customer]);
   return (
-    <>
+    <div className="max-w-screen-2xl mx-auto">
       {loading && <Loading />}
       <div className="mt-8 bg-white shadow rounded-lg overflow-hidden">
         <div className="flex flex-col md:flex-row justify-between items-center py-5 md:py-0">
@@ -164,7 +164,7 @@ const CustomerInfo = () => {
             <History key={history._id} history={history} />
           ))}
       </div>
-    </>
+    </div>
   );
 };
 

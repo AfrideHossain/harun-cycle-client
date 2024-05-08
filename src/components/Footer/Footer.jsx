@@ -9,7 +9,7 @@ const Footer = () => {
             <h2 className="text-center text-2xl font-bold text-gray-800">
               Stock Management System
             </h2>
-            <p className="text-right text-xs">version 1.2.0</p>
+            <p className="text-right text-xs">version 1.3.0</p>
           </div>
           <div className="space-y-3">
             <p className="text-sm text-center">

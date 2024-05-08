@@ -8,12 +8,13 @@ const UpdateProduct = () => {
   let loadedProduct = useLoaderData();
   let product = loadedProduct?.product;
 
-  const [name, setName] = useState(product.name);
-  const [brand, setBrand] = useState(product.brand);
-  const [quantity, setQuantity] = useState(product.quantity);
-  const [retail, setRetail] = useState(product.retail);
-  const [wholesale, setWholesale] = useState(product.wholesale);
-  const [warranty, setWarranty] = useState(product.warranty);
+  const [name, setName] = useState(product?.name);
+  const [brand, setBrand] = useState(product?.brand);
+  const [quantity, setQuantity] = useState(product?.quantity);
+  const [retail, setRetail] = useState(product?.retail);
+  const [wholesale, setWholesale] = useState(product?.wholesale);
+  const [warranty, setWarranty] = useState(product?.warranty);
+  const [unit, setUnit] = useState(product?.unit || "");
 
   const handleAddProduct = (e) => {
     e.preventDefault();
@@ -21,6 +22,7 @@ const UpdateProduct = () => {
       name,
       brand,
       quantity,
+      unit,
       warranty,
       retail,
       wholesale,
@@ -42,6 +44,15 @@ const UpdateProduct = () => {
         }
       });
   };
+  useEffect(() => {
+    if (unit.length > 0) {
+      const pickUnitOption = document.getElementById(unit);
+      pickUnitOption.selected = true;
+    } else {
+      const pickUnitOption = document.getElementById("UnitNull");
+      pickUnitOption.selected = true;
+    }
+  }, [unit]);
   return (
     <div className="min-h-screen flex items-center justify-center px-4 mt-5">
       <div className="bg-white shadow-md rounded-md p-6 md:max-w-lg w-full">
@@ -91,6 +102,54 @@ const UpdateProduct = () => {
                 setQuantity(e.target.value);
               }}
             />
+          </div>
+          <div className="mb-4">
+            <label
+              className="text-gray-700 font-bold mb-2"
+              htmlFor="product-unit"
+            >
+              Unit
+            </label>
+            {/* <input
+              id="product-unit"
+              type="text"
+              placeholder="E.g: Kg"
+              className="border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:bg-gray-100"
+              onChange={(e) => {
+                setUnit(e.target.value);
+              }}
+              required
+            /> */}
+            <select
+              id="product-unit"
+              type="text"
+              placeholder="E.g: Kg"
+              className="border rounded-md w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:bg-gray-100"
+              value={unit}
+              onChange={(e) => {
+                setUnit(e.target.value);
+              }}
+              required
+            >
+              <option id="UnitNull" value="">
+                Select Unit
+              </option>
+              <option id="Kg" value="Kg">
+                Kg
+              </option>
+              <option id="Pcs" value="Pcs">
+                Pcs
+              </option>
+              <option id="Pair" value="Pair">
+                Pair
+              </option>
+              <option id="Set" value="Set">
+                Set
+              </option>
+              <option id="Dozen" value="Dozen">
+                Dozen
+              </option>
+            </select>
           </div>
           <div className="mb-4">
             <label className="text-gray-700 font-bold mb-2" htmlFor="warranty">

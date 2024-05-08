@@ -3,13 +3,15 @@ import {
   CurrencyBangladeshiIcon,
   PencilSquareIcon,
   TrashIcon,
+  ScaleIcon,
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 
 const Product = ({ product, refetch }) => {
-  const { _id, name, brand, quantity, retail, wholesale, warranty } = product;
+  const { _id, name, brand, quantity, unit, retail, wholesale, warranty } =
+    product;
   const token = Cookies.get("token");
   const deleteProductHandler = (id) => {
     Swal.fire({
@@ -42,10 +44,16 @@ const Product = ({ product, refetch }) => {
         <h1 className="text-[#474747] font-extrabold text-2xl mb-2 text-left">
           {name}
         </h1>
-        <p className="text-orange-600 font-semibold text-base mb-2">
-          Available Quantity:{" "}
-          <span className="text-orange-500">{quantity}</span>
-        </p>
+        <div className="flex items-center gap-10">
+          <p className="text-orange-600 font-semibold text-base mb-2">
+            Available Quantity:{" "}
+            <span className="text-orange-500">{quantity}</span>
+          </p>
+          <p className="font-semibold text-base text-[#757575] mb-2 flex items-center gap-2">
+            <ScaleIcon className="h-6 w-6" />
+            Unit: <span className="text-orange-500">{unit || "N/A"}</span>
+          </p>
+        </div>
         {/* tags */}
         <div className="flex gap-2 mb-2">
           <div className="border border-[#9873FF] rounded px-3 py-2">

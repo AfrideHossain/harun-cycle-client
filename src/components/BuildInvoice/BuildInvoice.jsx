@@ -31,9 +31,9 @@ const BuildInvoice = () => {
   const [total, setTotal] = useState(0);
   const [currentPayment, setCurrentPayment] = useState(0);
   const [purchaseItems, setPurchaseItems] = useState([
-    { name: "", warranty: "", quantity: 0, price: 0 },
+    { name: "", warranty: "", quantity: 0, unit: "", price: 0 },
   ]);
-  const [selectedProduct, setSelectedProduct] = useState("");
+  // const [selectedProduct, setSelectedProduct] = useState("");
   const { setInvoiceData } = useContext(AuthContext);
 
   // temp code
@@ -49,6 +49,7 @@ const BuildInvoice = () => {
         productId: selectedProduct._id,
         name: selectedProduct.name,
         price: selectedProduct.retail,
+        unit: selectedProduct.unit,
         warranty: selectedProduct.warranty,
       };
       setPurchaseItems(updatedItems);
@@ -104,7 +105,7 @@ const BuildInvoice = () => {
   const handleAddItem = () => {
     setPurchaseItems([
       ...purchaseItems,
-      { name: "", warranty: "", quantity: 0, price: 0 },
+      { name: "", warranty: "", quantity: 0, unit: "", price: 0 },
     ]);
   };
 
@@ -317,6 +318,7 @@ const BuildInvoice = () => {
             <div className="product-details-head form-control">
               <label htmlFor="product-name">Product Name</label>
               <label htmlFor="product-quantity">Quantity</label>
+              <label htmlFor="product-quantity">Unit</label>
               <label htmlFor="product-price">Price (taka per quantity)</label>
               <label htmlFor="product-warranty">Warranty (if available)</label>
             </div>
@@ -339,6 +341,7 @@ const BuildInvoice = () => {
                 {/* Render other fields (quantity, price, warranty) based on selected product */}
                 {item.productId && (
                   <>
+                    {/* {console.log(item)} */}
                     <div className="form-control">
                       <input
                         type="number"
@@ -349,6 +352,18 @@ const BuildInvoice = () => {
                           handleItemChange(index, "quantity", e.target.value)
                         }
                         required
+                      />
+                    </div>
+                    <div className="form-control">
+                      <input
+                        type="text"
+                        id={`unit-${index}`}
+                        className="product-unit"
+                        value={item.unit || ""}
+                        onChange={(e) =>
+                          handleItemChange(index, "unit", e.target.value)
+                        }
+                        readOnly
                       />
                     </div>
                     <div className="form-control">

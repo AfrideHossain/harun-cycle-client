@@ -5,7 +5,7 @@ const History = ({ history }) => {
   const { _id, date, invoiceNumber, clientName, billAmount, purchaseItems } =
     history;
   return (
-    <div className="container relative flex flex-col gap-4 bg-white border border-[#E8E8E8] rounded-lg w-full p-6">
+    <div className="container relative flex flex-col gap-4 bg-white border border-[#E8E8E8] rounded-lg p-6">
       <div className="w-full">
         <div className="w-full flex flex-col md:flex-row md:items-center justify-between">
           <h1 className="text-[#474747] font-extrabold text-2xl mb-2 text-left">
@@ -13,7 +13,7 @@ const History = ({ history }) => {
           </h1>
           <p className="gradient-text font-extrabold">{invoiceNumber}</p>
         </div>
-        <div className="flex flex-col md:flex-row md:items-center justify-center md:gap-5">
+        <div className="flex flex-col md:flex-row md:items-center justify-between md:gap-5">
           <p className="text-orange-600 font-semibold text-base mb-2">
             Customer name: {clientName}
           </p>
@@ -26,7 +26,7 @@ const History = ({ history }) => {
           </div>
         </div>
       </div>
-      <div className="overflow-x-auto">
+      {/* <div className="overflow-x-auto">
         <div className="py-2 inline-block min-w-full">
           <div className="overflow-hidden rounded">
             <table className="min-w-full">
@@ -93,7 +93,7 @@ const History = ({ history }) => {
             </table>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

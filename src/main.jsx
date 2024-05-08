@@ -23,6 +23,7 @@ import Cookies from "js-cookie";
 import Products from "./components/Products/Products";
 import UpdateProduct from "./components/UpdateProduct/UpdateProduct";
 import AllCustomers from "./components/AllCustomers/AllCustomers";
+import { Helmet } from "react-helmet";
 
 const mainUrl = import.meta.env.VITE_BACKURL;
 const token = Cookies.get("token");
@@ -173,7 +174,12 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthContextProvider>
-      <RouterProvider router={router} />
+      <div className="max-w-screen-2xl mx-auto px-4">
+        <Helmet>
+          <title>Harun Cycle Store</title>
+        </Helmet>
+        <RouterProvider router={router} />
+      </div>
     </AuthContextProvider>
   </React.StrictMode>
 );

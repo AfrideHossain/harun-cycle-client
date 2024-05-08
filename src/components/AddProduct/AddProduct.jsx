@@ -11,12 +11,14 @@ const AddProduct = () => {
   const [retail, setRetail] = useState(null);
   const [wholesale, setWholesale] = useState(null);
   const [warranty, setWarranty] = useState("");
+  const [unit, setUnit] = useState("");
   const handleAddProduct = (e) => {
     e.preventDefault();
     let bodyData = {
       name,
       brand,
       quantity,
+      unit,
       warranty,
       retail,
       wholesale,
@@ -84,6 +86,53 @@ const AddProduct = () => {
               }}
               required
             />
+          </div>
+          <div className="mb-4">
+            <label
+              className="text-gray-700 font-bold mb-2"
+              htmlFor="product-unit"
+            >
+              Unit
+            </label>
+            {/* <input
+              id="product-unit"
+              type="text"
+              placeholder="E.g: Kg"
+              className="border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:bg-gray-100"
+              onChange={(e) => {
+                setUnit(e.target.value);
+              }}
+              required
+            /> */}
+            <select
+              id="product-unit"
+              type="text"
+              placeholder="E.g: Kg"
+              className="border rounded-md w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:bg-gray-100"
+              onChange={(e) => {
+                setUnit(e.target.value);
+              }}
+              required
+            >
+              <option id="UnitNull" value="">
+                Select Unit
+              </option>
+              <option id="Kg" value="Kg">
+                Kg
+              </option>
+              <option id="Pcs" value="Pcs">
+                Pcs
+              </option>
+              <option id="Pair" value="Pair">
+                Pair
+              </option>
+              <option id="Set" value="Set">
+                Set
+              </option>
+              <option id="Dozen" value="Dozen">
+                Dozen
+              </option>
+            </select>
           </div>
           <div className="mb-4">
             <label className="text-gray-700 font-bold mb-2" htmlFor="warranty">
