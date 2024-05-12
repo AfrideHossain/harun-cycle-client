@@ -1,4 +1,10 @@
-import { UserIcon } from "@heroicons/react/24/outline";
+import {
+  UserIcon,
+  BanknotesIcon,
+  PlusIcon,
+  EyeIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -202,18 +208,36 @@ const AllCustomers = () => {
                           {customer.clientDueAmount}
                         </td>
                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          <div className="grid md:grid-cols-2 gap-2">
+                          <div className="grid md:grid-cols-3 gap-2 justify-end">
+                            <Link
+                              to={`/depositdues/${customer.clientPhone}`}
+                              className={`${
+                                customer.clientDueAmount === 0 && "invisible"
+                              } font-medium text-white bg-indigo-600 px-1 py-2 rounded hover:bg-indigo-500`}
+                              title="Deposit Dues"
+                              role="button"
+                            >
+                              {/* Deposit Dues */}
+                              <div className="relative flex items-start mx-auto w-fit">
+                                <BanknotesIcon className="w-6 h-6" />
+                                <PlusIcon className="w-4 h-4" />
+                              </div>
+                            </Link>
                             <Link
                               to={`/customerinfo/${customer.clientPhone}`}
-                              className="font-medium text-white bg-indigo-600 p-2 rounded hover:bg-indigo-500"
+                              className="font-medium text-white flex justify-center items-center bg-indigo-600 px-1 py-2 rounded hover:bg-indigo-500"
+                              title="View Client"
                             >
-                              View
+                              {/* View */}
+                              <EyeIcon className="w-6 h-6" />
                             </Link>
                             <button
-                              className="btn font-medium text-white bg-red-600 p-2 rounded hover:bg-red-500"
+                              className="btn font-medium text-white flex justify-center items-center bg-red-600 px-1 py-2 rounded hover:bg-red-500"
                               onClick={() => handleUserDelete(customer._id)}
+                              title="Delete Client"
                             >
-                              Delete
+                              {/* Delete */}
+                              <TrashIcon className="w-6 h-6" />
                             </button>
                           </div>
                         </td>

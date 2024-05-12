@@ -31,7 +31,7 @@ const BuildInvoice = () => {
   const [total, setTotal] = useState(0);
   const [currentPayment, setCurrentPayment] = useState(0);
   const [purchaseItems, setPurchaseItems] = useState([
-    { name: "", warranty: "", quantity: 0, unit: "", price: 0 },
+    { name: "", warranty: "", quantity: "", unit: "", price: 0 },
   ]);
   // const [selectedProduct, setSelectedProduct] = useState("");
   const { setInvoiceData } = useContext(AuthContext);
@@ -105,7 +105,7 @@ const BuildInvoice = () => {
   const handleAddItem = () => {
     setPurchaseItems([
       ...purchaseItems,
-      { name: "", warranty: "", quantity: 0, unit: "", price: 0 },
+      { name: "", warranty: "", quantity: "", unit: "", price: 0 },
     ]);
   };
 
@@ -208,7 +208,7 @@ const BuildInvoice = () => {
   useEffect(() => {
     let totalAmount = due;
     purchaseItems.map((item) => {
-      totalAmount += item.price * item.quantity;
+      totalAmount += item.price * parseFloat(item.quantity);
     });
     setTotal(totalAmount);
   }, [purchaseItems, due]);
@@ -344,7 +344,7 @@ const BuildInvoice = () => {
                     {/* {console.log(item)} */}
                     <div className="form-control">
                       <input
-                        type="number"
+                        type="text"
                         id={`quantity-${index}`}
                         className="product-quantity"
                         value={item.quantity || ""}

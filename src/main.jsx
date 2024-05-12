@@ -24,6 +24,7 @@ import Products from "./components/Products/Products";
 import UpdateProduct from "./components/UpdateProduct/UpdateProduct";
 import AllCustomers from "./components/AllCustomers/AllCustomers";
 import { Helmet } from "react-helmet";
+import DepositDues from "./components/DepositDues/DepositDues";
 
 const mainUrl = import.meta.env.VITE_BACKURL;
 const token = Cookies.get("token");
@@ -94,6 +95,27 @@ const router = createBrowserRouter([
             <CustomerInfoUpdate />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/depositdues/:id",
+        element: (
+          <PrivateRoute>
+            <DepositDues />
+          </PrivateRoute>
+        ),
+        loader: async ({ params }) => {
+          let customer = await fetch(
+            `${mainUrl}/manageclient/client/${params.id}`,
+            {
+              method: "GET",
+              headers: {
+                "auth-token": token,
+              },
+            }
+          );
+          let customerJson = await customer.json();
+          return customerJson.client;
+        },
       },
       {
         path: "/addproduct",

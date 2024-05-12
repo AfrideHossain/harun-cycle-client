@@ -17,12 +17,13 @@ const AddProduct = () => {
     let bodyData = {
       name,
       brand,
-      quantity,
+      quantity: parseFloat(quantity),
       unit,
       warranty,
       retail,
       wholesale,
     };
+    console.log(bodyData);
     fetch(`${mainUrl}/manage/addproduct`, {
       method: "POST",
       headers: {
@@ -78,7 +79,7 @@ const AddProduct = () => {
             </label>
             <input
               id="product-quantity"
-              type="number"
+              type="text"
               placeholder="How many items to add"
               className="border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:bg-gray-100"
               onChange={(e) => {

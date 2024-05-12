@@ -5,7 +5,7 @@ const History = ({ history }) => {
   const { _id, date, invoiceNumber, clientName, billAmount, purchaseItems } =
     history;
   return (
-    <div className="container relative flex flex-col gap-4 bg-white border border-[#E8E8E8] rounded-lg p-6">
+    <div className="container relative flex flex-col gap-4 p-6">
       <div className="w-full">
         <div className="w-full flex flex-col md:flex-row md:items-center justify-between">
           <h1 className="text-[#474747] font-extrabold text-2xl mb-2 text-left">

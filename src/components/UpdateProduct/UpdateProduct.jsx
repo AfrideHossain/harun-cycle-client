@@ -21,7 +21,7 @@ const UpdateProduct = () => {
     let bodyData = {
       name,
       brand,
-      quantity,
+      quantity: parseFloat(quantity),
       unit,
       warranty,
       retail,

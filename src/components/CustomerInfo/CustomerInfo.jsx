@@ -3,16 +3,22 @@ import {
   UserCircleIcon,
   CurrencyBangladeshiIcon,
   UserIcon,
+  BanknotesIcon,
 } from "@heroicons/react/24/outline";
 import Cookies from "js-cookie";
 import Loading from "../Shared/Loading";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import History from "../History/History";
+
+// import react tabs things
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
 
 const CustomerInfo = () => {
   // const [customerId, setCustomerId] = useState("");
   const [customerPhone, setcustomerPhone] = useState("");
   const [histories, setHistories] = useState([]);
+  const [deposits, setDeposits] = useState([]);
   const token = Cookies.get("token");
   const mainUrl = import.meta.env.VITE_BACKURL;
   const [error, setError] = useState("");
@@ -58,6 +64,7 @@ const CustomerInfo = () => {
       .then((res) => res.json())
       .then((result) => {
         setHistories(result.allHistory);
+        setDeposits(result.allDiposits);
       });
   }, [customer]);
   return (
@@ -149,20 +156,95 @@ const CustomerInfo = () => {
           </dl>
         </div>
         <div className="flex justify-end items-center px-4 py-3 sm:px-6">
-          {/* <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-          <PencilSquareIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-          Modify
-        </button> */}
+          {customer.clientDueAmount > 0 && (
+            <Link
+              to={`/depositdues/${customer.clientPhone}`}
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+            >
+              <BanknotesIcon
+                className="-ml-1 mr-2 h-5 w-5"
+                aria-hidden="true"
+              />
+              Add Deposit
+            </Link>
+          )}
         </div>
       </div>
       <h1 className="mt-5 w-fit mx-auto text-lg sm:text-xl text-center font-semibold text-gray-200 items-center border-b py-3 px-8">
         Customer's History
       </h1>
-      <div className="space-y-2">
-        {histories &&
-          histories?.map((history) => (
-            <History key={history._id} history={history} />
-          ))}
+      <div className="bg-white p-4 rounded-lg">
+        <Tabs>
+          <TabList>
+            <Tab>Purchase</Tab>
+            <Tab>Deposit</Tab>
+          </TabList>
+
+          <TabPanel>
+            <div className="space-y divide-y divide-gray-500">
+              {histories &&
+                histories?.map((history) => (
+                  <History key={history._id} history={history} />
+                ))}
+            </div>
+          </TabPanel>
+          <TabPanel>
+            {deposits.length > 0 ? (
+              <div className="flex flex-col">
+                <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                  <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                    <div className="overflow-hidden">
+                      <table className="min-w-full text-left text-sm font-light">
+                        <thead className="border-b font-medium dark:border-neutral-500">
+                          <tr>
+                            <th scope="col" className="px-6 py-4 text-center">
+                              SL
+                            </th>
+                            <th scope="col" className="px-6 py-4 text-center">
+                              Date
+                            </th>
+                            <th scope="col" className="px-6 py-4 text-center">
+                              Type
+                            </th>
+                            <th scope="col" className="px-6 py-4 text-center">
+                              Amount
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {deposits &&
+                            deposits?.map((deposit, indx) => (
+                              <tr
+                                className="border-b dark:border-neutral-500"
+                                key={deposit._id}
+                              >
+                                <td className="whitespace-nowrap px-6 py-4 font-medium">
+                                  {indx + 1}
+                                </td>
+                                <td className="whitespace-nowrap px-6 py-4">
+                                  {deposit.date}
+                                </td>
+                                <td className="whitespace-nowrap px-6 py-4">
+                                  {deposit.type}
+                                </td>
+                                <td className="whitespace-nowrap px-6 py-4">
+                                  {deposit.amount} Taka
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <h1 className="text-center p-4 text-2xl font-semibold">
+                No deposit history found
+              </h1>
+            )}
+          </TabPanel>
+        </Tabs>
       </div>
     </div>
   );
