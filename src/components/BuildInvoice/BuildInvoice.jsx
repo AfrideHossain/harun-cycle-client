@@ -320,7 +320,7 @@ const BuildInvoice = () => {
               <label htmlFor="product-quantity">Quantity</label>
               <label htmlFor="product-quantity">Unit</label>
               <label htmlFor="product-price">Price (taka per quantity)</label>
-              <label htmlFor="product-warranty">Warranty (if available)</label>
+              {/* <label htmlFor="product-warranty">Warranty (if available)</label> */}
             </div>
 
             {purchaseItems.map((item, index) => (
@@ -378,7 +378,7 @@ const BuildInvoice = () => {
                         required
                       />
                     </div>
-                    <div className="form-control">
+                    {/* <div className="form-control">
                       <input
                         type="text"
                         id={`warranty-${index}`}
@@ -388,7 +388,7 @@ const BuildInvoice = () => {
                           handleItemChange(index, "warranty", e.target.value)
                         }
                       />
-                    </div>
+                    </div> */}
                     <button
                       className="btn-red"
                       type="button"

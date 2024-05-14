@@ -90,6 +90,9 @@ table {
 .left-td {
   text-align: left;
 }
+.right-td {
+  text-align: right;
+}
 
 /* Define the table header */
 th {

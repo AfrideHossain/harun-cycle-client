@@ -56,18 +56,20 @@ const Invoice = React.forwardRef((props, ref) => {
           <table>
             <thead>
               <tr>
+                <th className="text-center">SL</th>
                 <th className="left-td">Product</th>
-                <th className="left-td">Warranty</th>
+                {/* <th className="left-td">Warranty</th> */}
                 <th>Quantity</th>
                 <th>Rate</th>
                 <th>Amount</th>
               </tr>
             </thead>
             <tbody>
-              {invoiceData.purchaseItems.map((product) => (
+              {invoiceData.purchaseItems.map((product, indx) => (
                 <tr key={product.name}>
+                  <td className="right-td">{indx + 1}</td>
                   <td className="left-td">{product.name}</td>
-                  <td className="left-td">{product.warranty || "N/A"}</td>
+                  {/* <td className="left-td">{product.warranty || "N/A"}</td> */}
                   <td>{`${product.quantity} ${product.unit || ""}`}</td>
                   <td className="text-right">
                     {product.price
