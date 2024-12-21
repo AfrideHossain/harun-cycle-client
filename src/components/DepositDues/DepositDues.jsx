@@ -11,124 +11,140 @@ const DepositDues = () => {
   const customerInfo = useLoaderData();
   const [customer, setCustomer] = useState(customerInfo || null);
   const [deposit, setDeposit] = useState(0);
+  const [date, setDate] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const reqBody = {
       deposit,
       customerId: customer._id,
+      date,
     };
-    fetch(`${mainUrl}/manageclient/deposit`, {
-      method: "put",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": token,
-      },
-      body: JSON.stringify(reqBody),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Dues deposit successful.",
-            showConfirmButton: false,
-            timer: 1500,
-          }).then(() => {
-            setDeposit(0);
-          });
-        }
+
+    try {
+      const response = await fetch(`${mainUrl}/manageclient/deposit`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+        body: JSON.stringify(reqBody),
       });
+
+      const data = await response.json();
+      setLoading(false);
+
+      if (data.success) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Dues deposit successful.",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          setDeposit(0);
+          setDate("");
+        });
+      } else {
+        setError(data.message || "An error occurred.");
+      }
+    } catch (err) {
+      setLoading(false);
+      setError("Failed to deposit. Please try again later.");
+    }
   };
 
   return (
-    // <>{console.log(customer)}</>
-    <form
-      onSubmit={handleSubmit}
-      className="bg-white rounded-lg shadow-md p-6 max-w-lg mx-auto my-5"
-    >
-      <div className="mb-4">
-        <label
-          className="block text-gray-700 font-bold mb-2"
-          htmlFor="full-name"
-        >
-          Full Name
-        </label>
-        <input
-          id="full-name"
-          type="text"
-          placeholder="Enter full name"
-          value={customer.clientName}
-          //   onChange={(e) => setFullName(e.target.value)}
-          readOnly
-          className="border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:border-gray-500"
-        />
+    <div className="min-h-screen text-gray-800 flex items-center justify-center py-10 px-5">
+      <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-3xl">
+        <h1 className="text-3xl font-bold mb-6 text-center text-blue-500">
+          Deposit Dues
+        </h1>
+
+        {/* Customer and dues information */}
+        <div className="mb-6">
+          <div className="p-4 bg-gray-100 rounded-lg mb-4 shadow-sm">
+            <h2 className="text-xl font-semibold text-blue-500 mb-2">
+              Customer Details
+            </h2>
+            <p>
+              <span className="font-semibold">Name:</span>{" "}
+              {customer.clientName || "Not Available"}
+            </p>
+            <p>
+              <span className="font-semibold">Phone:</span>{" "}
+              {customer.clientPhone || "Not Available"}
+            </p>
+            <p>
+              <span className="font-semibold">Email:</span>{" "}
+              {customer.clientEmail || "Not Available"}
+            </p>
+            <p>
+              <span className="font-semibold">Address:</span>{" "}
+              {customer.clientAddress || "Not Available"}
+            </p>
+          </div>
+          <div className="p-4 bg-gray-100 rounded-lg text-center shadow-sm">
+            <h2 className="text-xl font-semibold text-blue-500 mb-2">
+              Current Due Amount
+            </h2>
+            <p className="text-3xl font-bold text-green-600">
+              {customer.clientDueAmount
+                .toString()
+                .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}{" "}
+              TK
+            </p>
+          </div>
+        </div>
+
+        {/* Deposit form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="flex flex-col">
+              <label htmlFor="deposit" className="mb-2 font-medium">
+                Deposit Amount
+              </label>
+              <input
+                type="number"
+                id="deposit"
+                className="bg-gray-100 border border-gray-300 rounded-lg p-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                value={deposit}
+                onChange={(e) => setDeposit(e.target.value)}
+                placeholder="Enter deposit amount"
+                required
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="date" className="mb-2 font-medium">
+                Date
+              </label>
+              <input
+                type="date"
+                id="date"
+                className="bg-gray-100 border border-gray-300 rounded-lg p-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+
+          <button
+            type="submit"
+            className={`w-full bg-blue-500 text-white py-3 rounded-lg font-medium text-lg hover:bg-blue-600 transition ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            disabled={loading}
+          >
+            {loading ? "Processing..." : "Submit Deposit"}
+          </button>
+        </form>
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2" htmlFor="phone">
-          Phone
-        </label>
-        <input
-          id="phone"
-          type="text"
-          placeholder="Enter phone number"
-          value={customer.clientPhone}
-          readOnly
-          //   onChange={(e) => setPhone(e.target.value)}
-          className="border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:border-gray-500"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2" htmlFor="address">
-          Address
-        </label>
-        <input
-          id="address"
-          placeholder="Enter address"
-          value={customer.clientAddress}
-          readOnly
-          //   onChange={(e) => setAddress(e.target.value)}
-          className="border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:border-gray-500"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2" htmlFor="due">
-          Due
-        </label>
-        <input
-          id="due"
-          type="text"
-          placeholder="Enter due amount"
-          value={`${customer.clientDueAmount} Taka`}
-          //   onChange={(e) => setDue(e.target.value)}
-          readOnly
-          className="border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:border-gray-500"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2" htmlFor="deposit">
-          Deposit Amount
-        </label>
-        <input
-          id="deposit"
-          type="number"
-          placeholder="Enter deposit amount"
-          value={deposit}
-          onChange={(e) => setDeposit(e.target.value)}
-          className="border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:border-gray-500"
-        />
-      </div>
-      <div className="flex justify-center">
-        <button
-          type="submit"
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold p-4 rounded-md focus:outline-none focus:shadow-outline"
-        >
-          Deposit
-        </button>
-      </div>
-    </form>
+    </div>
   );
 };
 

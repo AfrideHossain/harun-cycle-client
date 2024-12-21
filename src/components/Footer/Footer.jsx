@@ -9,7 +9,7 @@ const Footer = () => {
             <h2 className="text-center text-2xl font-bold text-gray-800">
               Stock Management System
             </h2>
-            <p className="text-right text-xs">version 1.3.0</p>
+            <p className="text-right text-xs">Version 2.0.0</p>
           </div>
           <div className="space-y-3">
             <p className="text-sm text-center">
@@ -18,7 +18,7 @@ const Footer = () => {
               eye-catching design.
             </p>
             <p className="text-sm text-center">
-              &copy; 2023 | Designed and Developed by{" "}
+              &copy; 2024 | Designed and Developed by{" "}
               <span className="gradient-text font-semibold">
                 <a href="https://afredehossain.netlify.app/" target="_blank">
                   Afrede Hossain

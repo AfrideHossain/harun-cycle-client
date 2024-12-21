@@ -46,7 +46,7 @@ const Invoice = React.forwardRef((props, ref) => {
             <p className="semibold">Harun Cycle Store</p>
             <p>Borogachi Bus Stand, Pangsha, Rajbari</p>
             <p>
-              <span>+880 </span>1761748833, <span>+880 </span>1971748833
+              <span>+880 </span>1761748833, <span>+880 </span>1711937175
             </p>
             <p>haruncycle2018@gmail.com</p>
           </div>

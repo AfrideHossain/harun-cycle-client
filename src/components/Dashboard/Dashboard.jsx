@@ -79,7 +79,7 @@ const Dashboard = () => {
       });
   };
   useEffect(() => {
-    setLoading(true);
+    /* setLoading(true);
     const currentDate = new Date();
     let date = currentDate.toDateString();
     let reqUrl = new URL(`${import.meta.env.VITE_BACKURL}/manage/billstoday`);
@@ -101,7 +101,63 @@ const Dashboard = () => {
         });
         setTodaysBills(newBills);
         setLoading(false);
-      });
+      }); */
+    // temporary
+    const fetchData = async () => {
+      setLoading(true);
+
+      try {
+        // Get the current date and one year ago date
+        const currentDate = new Date();
+        const oneYearAgo = new Date();
+        oneYearAgo.setFullYear(currentDate.getFullYear() - 1);
+
+        // Format the dates into the "Wed Oct 25 2023" format
+        const formatDate = (date) => date.toDateString();
+        const startDate = formatDate(oneYearAgo);
+        const endDate = formatDate(currentDate);
+
+        // Prepare the request URL with the formatted dates
+        const reqUrl = new URL(
+          `${import.meta.env.VITE_BACKURL}/manage/billsrange`
+        );
+        reqUrl.searchParams.append("startDate", startDate);
+        reqUrl.searchParams.append("endDate", endDate);
+
+        // Fetch sales history
+        const response = await fetch(reqUrl, {
+          method: "GET",
+          headers: {
+            "auth-token": token,
+          },
+        });
+        const data = await response.json();
+        if (data.success) {
+          setTodaysBills(data.allBills); // Update your state with all fetched bills
+        } else {
+          console.log(data.msg);
+        }
+
+        // Fetch current stock
+        const stockResponse = await fetch(
+          `${import.meta.env.VITE_BACKURL}/manage/allproducts`,
+          {
+            method: "GET",
+            headers: {
+              "auth-token": token,
+            },
+          }
+        );
+        const stockData = await stockResponse.json();
+        setStockPrice(stockData.stockValue);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
     // fetch current stock
     let loadStock = fetch(
       `${import.meta.env.VITE_BACKURL}/manage/allproducts`,

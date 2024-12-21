@@ -18,6 +18,7 @@ const AllCustomers = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [refetch, setRefetch] = useState(false);
+  const [totalDue, setTotalDue] = useState(0);
 
   const searchClientHandler = (phone) => {
     setLoading(true);
@@ -55,6 +56,16 @@ const AllCustomers = () => {
       });
     setLoading(false);
   }, [refetch]);
+
+  // Calculate total due amount
+  useEffect(() => {
+    let total = customers.reduce(
+      (acc, customer) => acc + customer.clientDueAmount,
+      0
+    );
+    setTotalDue(total);
+  }, [customers]);
+  // console.log("Total Due: ", totalDue);
 
   const handleUserDelete = (id) => {
     Swal.fire({
@@ -133,6 +144,16 @@ const AllCustomers = () => {
         <div className="flex flex-col">
           <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
             <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+              {/* Total Due amount -> */}
+              <div className="mb-2 flex justify-end">
+                <p className="text-2xl text-white font-bold">
+                  Total Due Amount:{" "}
+                  {totalDue
+                    .toString()
+                    .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                  Taka
+                </p>
+              </div>
               <div className="overflow-hidden rounded-md">
                 <table className="min-w-full">
                   <thead className="table-header-group bg-white border-b">
@@ -143,12 +164,12 @@ const AllCustomers = () => {
                       >
                         #
                       </th>
-                      <th
+                      {/* <th
                         scope="col"
                         className="text-sm font-medium text-gray-900 px-6 py-4"
                       >
                         Customer ID
-                      </th>
+                      </th> */}
                       <th
                         scope="col"
                         className="text-sm font-medium text-gray-900 px-6 py-4"
@@ -192,9 +213,9 @@ const AllCustomers = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           {indx + 1}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {/* <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           {customer._id}
-                        </td>
+                        </td> */}
                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                           {customer.clientName}
                         </td>
@@ -205,7 +226,13 @@ const AllCustomers = () => {
                           {customer.clientAddress}
                         </td>
                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-right">
-                          {customer.clientDueAmount}
+                          {customer.clientDueAmount
+                            .toString()
+                            .replace(
+                              /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
+                              ","
+                            )}{" "}
+                          Taka
                         </td>
                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                           <div className="grid md:grid-cols-3 gap-2 justify-end">

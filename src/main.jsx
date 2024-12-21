@@ -66,30 +66,34 @@ const router = createBrowserRouter([
             <CustomerInfo />
           </PrivateRoute>
         ),
-        loader: async ({ params }) => {
-          let customer = await fetch(
-            `${mainUrl}/manageclient/client/${params.id}`,
-            {
-              method: "GET",
-              headers: {
-                "auth-token": token,
-              },
-            }
-          );
-          let customerJson = await customer.json();
-          return customerJson.client;
-        },
+        // loader: async ({ params }) => {
+        //   if (!token) {
+        //     console.log("From customer history: Auth Token not found");
+        //     return;
+        //   }
+        //   let customer = await fetch(
+        //     `${mainUrl}/manageclient/client/${params.id}`,
+        //     {
+        //       method: "GET",
+        //       headers: {
+        //         "auth-token": token,
+        //       },
+        //     }
+        //   );
+        //   let customerJson = await customer.json();
+        //   return customerJson.client;
+        // },
       },
+      // {
+      //   path: "/customerinfo",
+      //   element: (
+      //     <PrivateRoute>
+      //       <CustomerInfo />
+      //     </PrivateRoute>
+      //   ),
+      // },
       {
-        path: "/customerinfo",
-        element: (
-          <PrivateRoute>
-            <CustomerInfo />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/customerinfoupdate",
+        path: "/customerinfoupdate/:id",
         element: (
           <PrivateRoute>
             <CustomerInfoUpdate />
