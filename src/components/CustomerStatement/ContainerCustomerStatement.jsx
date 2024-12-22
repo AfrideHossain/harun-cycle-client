@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import CustomerStatement from "./CustomerStatement";
 import ReactToPrint from "react-to-print";
 import { PrinterIcon } from "@heroicons/react/24/outline";
+import { AuthContext } from "../Context/AuthContextProvider";
 
 const ContainerCustomerStatement = () => {
   const StatementRef = useRef();
@@ -16,8 +17,10 @@ const ContainerCustomerStatement = () => {
 
   // auth token from cookie
   const token = Cookies.get("token");
+  // set statement function from context
+  const { setCustomerStatement } = useContext(AuthContext);
 
-  console.log("phone: ", phone);
+  // console.log("phone: ", phone);
   // backern url
   const mainUrl = import.meta.env.VITE_BACKURL;
 
@@ -66,6 +69,11 @@ const ContainerCustomerStatement = () => {
         const data = await response.json();
         setInvoices(data?.allHistory || []);
         setDeposits(data?.allDeposits || []);
+        setCustomerStatement({
+          customer: customer || {},
+          invoices: data?.allHistory || [],
+          deposits: data?.allDeposits || [],
+        });
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -91,18 +99,10 @@ const ContainerCustomerStatement = () => {
         />
       </div>
       <div className="mt-5">
-        {customer && invoices && deposits ? (
-          <CustomerStatement
-            ref={StatementRef}
-            customerStatement={{ customerInfo: customer, invoices, deposits }}
-          />
-        ) : (
-          <p>Loading...</p>
-        )}
+        <CustomerStatement ref={StatementRef} />
       </div>
     </div>
   );
 };
 
 export default ContainerCustomerStatement;
-("To print a functional component ensure it is wrapped with `React.forwardRef`, and ensure the forwarded ref is used. See the README for an example: https://github.com/gregnb/react-to-print#examples");

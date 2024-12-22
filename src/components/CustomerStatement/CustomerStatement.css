@@ -8,6 +8,7 @@
 @page {
   size: A4;
   margin: 0;
+  orientation: landscape;
 }
 
 /* Add some padding to the page content */
@@ -44,32 +45,28 @@
   font-size: 12pt;
   font-weight: 600;
 }
-
-.date-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  padding: 10px 0;
-  font-size: 10pt;
-  border-bottom: 1px solid #ddd;
+.statement_header .normal-texts p {
+  font-size: 9pt;
 }
 
-/* Define the invoice details */
-.details {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+/* Define the statement details */
+.customer-info-container h3 {
+  font-size: 12pt;
+  font-weight: 600;
+  line-height: 2;
+}
+
+.customer-info {
   margin-bottom: 0.5cm;
 }
 
-.details p {
+.customer-info p {
   font-weight: 400;
   font-size: 9pt;
-  margin: 5px 0;
+  line-height: 1.5;
 }
 
-.details .semibold {
+.customer-info .semibold {
   font-weight: 700;
 }
 
