@@ -25,6 +25,8 @@ import UpdateProduct from "./components/UpdateProduct/UpdateProduct";
 import AllCustomers from "./components/AllCustomers/AllCustomers";
 import { Helmet } from "react-helmet";
 import DepositDues from "./components/DepositDues/DepositDues";
+import CustomerStatement from "./components/CustomerStatement/CustomerStatement";
+import ContainerCustomerStatement from "./components/CustomerStatement/ContainerCustomerStatement";
 
 const mainUrl = import.meta.env.VITE_BACKURL;
 const token = Cookies.get("token");
@@ -186,6 +188,15 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <PrintInvoice />
+          </PrivateRoute>
+        ),
+      },
+      // route for printing client statement
+      {
+        path: "/printstatement/:phone",
+        element: (
+          <PrivateRoute>
+            <ContainerCustomerStatement />
           </PrivateRoute>
         ),
       },

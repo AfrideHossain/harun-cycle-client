@@ -5,6 +5,7 @@ import {
   UserIcon,
   BanknotesIcon,
   PencilIcon,
+  DocumentIcon,
 } from "@heroicons/react/24/outline";
 import Cookies from "js-cookie";
 import Loading from "../Shared/Loading";
@@ -201,6 +202,13 @@ const CustomerInfo = () => {
         {/* Add Deposit Button */}
         {customer?.clientDueAmount > 0 && (
           <div className="flex justify-end items-center gap-4 px-4 py-3 sm:px-6">
+            <Link
+              to={`/printstatement/${customer.clientPhone}`}
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+            >
+              <DocumentIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+              Statement
+            </Link>
             <Link
               to={`/customerinfoupdate/${customer._id}`}
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"

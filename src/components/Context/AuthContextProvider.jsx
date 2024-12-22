@@ -1,4 +1,4 @@
-import { data } from "autoprefixer";
+
 import Cookies from "js-cookie";
 import React, { createContext, useEffect, useState } from "react";
 
@@ -9,6 +9,8 @@ const AuthContextProvider = ({ children }) => {
   const [incomeToday, setIncomeToday] = useState(0);
   const [invoiceData, setInvoiceData] = useState({});
   const [loading, setLoading] = useState(false);
+  // Statement state
+  const [customerStatement, setCustomerStatement] = useState({});
   const token = Cookies.get("token");
 
   useEffect(() => {
@@ -38,6 +40,8 @@ const AuthContextProvider = ({ children }) => {
     setInvoiceData,
     incomeToday,
     setIncomeToday,
+    customerStatement,
+    setCustomerStatement,
   };
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
