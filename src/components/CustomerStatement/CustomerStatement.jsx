@@ -56,23 +56,106 @@ const CustomerStatement = React.forwardRef((props, ref) => {
           </div>
         </div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Details</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Date</td>
-            <td>Details</td>
-            <td>4953</td>
-          </tr>
-        </tbody>
-      </table>
+      {/* Invoices tables */}
+      <div className="invoice-tables">
+        <h2
+          style={{
+            fontSize: "20pt",
+            fontWeight: "600",
+            textAlign: "center",
+            lineHeight: 2,
+          }}
+        >
+          Purchases History
+        </h2>
+        <table>
+          <thead>
+            <tr>
+              <th>SL</th>
+              <th>Date</th>
+              <th>Invoice Number</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {customerStatement?.invoices?.map((invoice, index) => (
+              <tr>
+                <td>{index + 1}</td>
+                <td style={{ textAlign: "left" }}>
+                  {new Date(invoice?.date).toLocaleDateString("en-us", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </td>
+                <td>{invoice?.invoiceNumber}</td>
+                <td style={{ textAlign: "right" }}>
+                  {invoice?.billAmount
+                    .toString()
+                    .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                  Taka
+                </td>
+              </tr>
+            ))}
+            {/* <tr>
+              <td>Date</td>
+              <td>Details</td>
+              <td>4953</td>
+            </tr> */}
+          </tbody>
+        </table>
+      </div>
+
       <h3>Total Amount: 234534</h3>
+
+      <div className="invoice-tables">
+        <h2
+          style={{
+            fontSize: "20pt",
+            fontWeight: "600",
+            textAlign: "center",
+            lineHeight: 2,
+          }}
+        >
+          Deposits History
+        </h2>
+        <table>
+          <thead>
+            <tr>
+              <th>SL</th>
+              <th>Date</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {customerStatement?.deposits?.map((deposit, index) => (
+              <tr>
+                <td>{index + 1}</td>
+                <td style={{ textAlign: "left" }}>
+                  {new Date(deposit?.date).toLocaleDateString("en-us", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </td>
+                <td style={{ textAlign: "right" }}>
+                  {deposit?.amount
+                    .toString()
+                    .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                  Taka
+                </td>
+              </tr>
+            ))}
+            {/* <tr>
+              <td>Date</td>
+              <td>Details</td>
+              <td>4953</td>
+            </tr> */}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 });
