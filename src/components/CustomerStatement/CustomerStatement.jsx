@@ -4,7 +4,7 @@ import { AuthContext } from "../Context/AuthContextProvider";
 
 const CustomerStatement = React.forwardRef((props, ref) => {
   const { customerStatement } = useContext(AuthContext);
-  console.log("customerStatement: ", customerStatement);
+  // console.log("customerStatement: ", customerStatement);
   return (
     <div ref={ref} className="statement_container">
       <div className="statement_header">
@@ -79,7 +79,7 @@ const CustomerStatement = React.forwardRef((props, ref) => {
           </thead>
           <tbody>
             {customerStatement?.invoices?.map((invoice, index) => (
-              <tr>
+              <tr key={invoice?._id}>
                 <td>{index + 1}</td>
                 <td style={{ textAlign: "left" }}>
                   {new Date(invoice?.date).toLocaleDateString("en-us", {
@@ -107,7 +107,24 @@ const CustomerStatement = React.forwardRef((props, ref) => {
         </table>
       </div>
 
-      <h3>Total Amount: 234534</h3>
+      {/* Total amount for purchases */}
+      <h3
+        style={{
+          fontSize: "11pt",
+          textAlign: "right",
+          marginRight: "20px",
+          marginTop: "20px",
+          fontWeight: "600",
+          lineHeight: 1.5,
+        }}
+      >
+        Total Amount:{" "}
+        {customerStatement?.invoices
+          ?.reduce((acc, invoice) => acc + invoice?.billAmount, 0)
+          .toString()
+          .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}{" "}
+        Taka
+      </h3>
 
       <div className="invoice-tables">
         <h2
@@ -130,7 +147,7 @@ const CustomerStatement = React.forwardRef((props, ref) => {
           </thead>
           <tbody>
             {customerStatement?.deposits?.map((deposit, index) => (
-              <tr>
+              <tr key={deposit?._id}>
                 <td>{index + 1}</td>
                 <td style={{ textAlign: "left" }}>
                   {new Date(deposit?.date).toLocaleDateString("en-us", {
@@ -156,6 +173,24 @@ const CustomerStatement = React.forwardRef((props, ref) => {
           </tbody>
         </table>
       </div>
+      {/* Total Amount for deposits */}
+      <h3
+        style={{
+          fontSize: "11pt",
+          textAlign: "right",
+          marginRight: "20px",
+          marginTop: "20px",
+          fontWeight: "600",
+          lineHeight: 1.5,
+        }}
+      >
+        Total Amount:{" "}
+        {customerStatement?.deposits
+          ?.reduce((acc, deposit) => acc + parseFloat(deposit?.amount), 0)
+          .toString()
+          .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}{" "}
+        Taka
+      </h3>
     </div>
   );
 });

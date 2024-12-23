@@ -27,6 +27,7 @@ import { Helmet } from "react-helmet";
 import DepositDues from "./components/DepositDues/DepositDues";
 import CustomerStatement from "./components/CustomerStatement/CustomerStatement";
 import ContainerCustomerStatement from "./components/CustomerStatement/ContainerCustomerStatement";
+import ContainerDepositSlip from "./components/DepositSlip/ContainerDepositSlip";
 
 const mainUrl = import.meta.env.VITE_BACKURL;
 const token = Cookies.get("token");
@@ -197,6 +198,15 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <ContainerCustomerStatement />
+          </PrivateRoute>
+        ),
+      },
+      // route for printing deposit slip
+      {
+        path: "/printdepositslip",
+        element: (
+          <PrivateRoute>
+            <ContainerDepositSlip />
           </PrivateRoute>
         ),
       },

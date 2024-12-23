@@ -1,4 +1,3 @@
-
 import Cookies from "js-cookie";
 import React, { createContext, useEffect, useState } from "react";
 
@@ -11,6 +10,9 @@ const AuthContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   // Statement state
   const [customerStatement, setCustomerStatement] = useState({});
+  // deposit slip
+  const [depositSlip, setDepositSlip] = useState({});
+  // auth token from cookie
   const token = Cookies.get("token");
 
   useEffect(() => {
@@ -42,6 +44,8 @@ const AuthContextProvider = ({ children }) => {
     setIncomeToday,
     customerStatement,
     setCustomerStatement,
+    depositSlip,
+    setDepositSlip,
   };
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>

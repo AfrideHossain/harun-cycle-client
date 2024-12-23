@@ -1,0 +1,51 @@
+/* importing notosans bangla */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@200;300;400;500;600;700;800;900&display=swap");
+/* importing solaiman lipi font from internet */
+@import url("https://fonts.maateen.me/solaiman-lipi/font.css");
+/* importing roboto font from google font api */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+/* Set page size and margins */
+@page {
+  size: A5 landscape;
+  margin: 0.5cm;
+  orientation: landscape;
+  border: 1px solid #000;
+}
+
+/* Add some padding to the page content */
+/* body {
+  padding: 1.5cm;
+  background-color: #fff;
+} */
+.deposit_slip_container {
+  /* margin-top: 20px; */
+  background-color: #fff;
+  padding: 0.5cm;
+  border-radius: 8px;
+  /* font-family: "Noto Sans Bengali", sans-serif; */
+  /* font-family: "SolaimanLipi", sans-serif; */
+  font-family: "Roboto", sans-serif;
+}
+/* Define the invoice header */
+.deposit_slip_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.deposit_slip_header h1 {
+  font-size: 20pt;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+.deposit_slip_header h2 {
+  font-size: 12pt;
+  font-weight: 600;
+}
+.deposit_slip_header .normal-texts p {
+  font-size: 9pt;
+}
