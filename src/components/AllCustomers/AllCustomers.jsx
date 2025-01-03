@@ -75,36 +75,92 @@ const AllCustomers = () => {
       showCancelButton: true,
       reverseButtons: true,
       confirmButtonColor: "#00b330",
-      cancelButtonColor: "#d33",
+      cancelButtonColor: "#d33333",
       confirmButtonText: "Yes, delete it!",
       cancelButtonText: "No, keep it",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(
-          `${import.meta.env.VITE_BACKURL}/manageclient/deletecustomer/${id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "auth-token": token,
-            },
-          }
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.success) {
-              setRefetch(true);
-              Swal.fire("Deleted!", "The user has been deleted.", "success");
-            } else {
-              Swal.fire("Failed", "Failed to delete the user", "error");
+        Swal.fire({
+          title: "Enter password to proceed",
+          input: "password",
+          width: "400px",
+          inputAttributes: {
+            autocapitalize: "off",
+          },
+          reverseButtons: true,
+          showCancelButton: true,
+          confirmButtonColor: "#00b330",
+          cancelButtonColor: "#d33333",
+          confirmButtonText: "Proceed",
+          showLoaderOnConfirm: true,
+          preConfirm: async (pass) => {
+            // console.log("from preConfirm: ", pass);
+            try {
+              const response = await fetch(`${mainUrl}/auth/checkpoint`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "auth-token": token,
+                },
+                body: JSON.stringify({ pass }),
+              });
+              if (!response.ok) {
+                return Swal.showValidationMessage(`
+          ${JSON.stringify(await response.json())}
+        `);
+              }
+              return response.json();
+            } catch (error) {
+              // console.log(error);
+              Swal.showValidationMessage(`
+        Request failed: ${error}
+      `);
             }
-          })
-          .catch(() => {
+          },
+          allowOutsideClick: () => !Swal.isLoading(),
+        }).then((result) => {
+          // console.log(result);
+          if (result.value?.success) {
+            fetch(
+              `${
+                import.meta.env.VITE_BACKURL
+              }/manageclient/deletecustomer/${id}`,
+              {
+                method: "DELETE",
+                headers: {
+                  "auth-token": token,
+                },
+              }
+            )
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.success) {
+                  setRefetch(true);
+                  Swal.fire(
+                    "Deleted!",
+                    "The user has been deleted.",
+                    "success"
+                  );
+                } else {
+                  Swal.fire("Failed", "Failed to delete the user", "error");
+                }
+              })
+              .catch(() => {
+                Swal.fire(
+                  "Sorry!",
+                  "Something went wrong, Please try again later. ",
+                  "warning"
+                );
+              });
+          } else {
             Swal.fire(
               "Sorry!",
-              "Something went wrong, Please try again later. ",
-              "warning"
+              "User is invalid or password is incorrect",
+              "error"
             );
-          });
+          }
+        });
+
         // Swal.fire("Deleted!", "The user has been deleted.", "success");
       }
     });

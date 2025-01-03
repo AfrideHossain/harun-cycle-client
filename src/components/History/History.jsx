@@ -9,7 +9,12 @@ const History = ({ history }) => {
       <div className="w-full">
         <div className="w-full flex flex-col md:flex-row md:items-center justify-between">
           <h1 className="text-[#474747] font-extrabold text-2xl mb-2 text-left">
-            {date}
+            {new Date(date).toLocaleDateString("en-us", {
+              weekday: "long",
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
           </h1>
           <p className="gradient-text font-extrabold">{invoiceNumber}</p>
         </div>

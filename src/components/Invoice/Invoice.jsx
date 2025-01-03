@@ -8,6 +8,26 @@ const Invoice = React.forwardRef((props, ref) => {
   // useEffect(() => {
   //   document.title = `Harun Cycle Store ${invoiceData.invoiceNumber}`;
   // }, []);
+  // setting up page
+  useEffect(() => {
+    // Inject the @page style dynamically
+    const style = document.createElement("style");
+    // style.type = "text/css";
+    style.textContent = `
+      @media print {
+        @page {
+          size: A5;
+          margin: 0.5cm;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    return () => {
+      // Cleanup the injected style on component unmount
+      document.head.removeChild(style);
+    };
+  }, []);
   return (
     <>
       <Helmet>

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+import { AuthContext } from "../Context/AuthContextProvider";
 
 const DepositDues = () => {
   const token = Cookies.get("token");
@@ -12,6 +13,12 @@ const DepositDues = () => {
   const [customer, setCustomer] = useState(customerInfo || null);
   const [deposit, setDeposit] = useState(0);
   const [date, setDate] = useState("");
+
+  // get set deposit slip function from auth context
+  const { setDepositSlip } = useContext(AuthContext);
+
+  // navigate hook
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,6 +44,7 @@ const DepositDues = () => {
       setLoading(false);
 
       if (data.success) {
+        setDepositSlip({ customer, deposit, date });
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -46,6 +54,7 @@ const DepositDues = () => {
         }).then(() => {
           setDeposit(0);
           setDate("");
+          navigate("/printdepositslip");
         });
       } else {
         setError(data.message || "An error occurred.");

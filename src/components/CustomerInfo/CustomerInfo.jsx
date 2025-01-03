@@ -155,19 +155,19 @@ const CustomerInfo = () => {
                   Full Name:
                 </dt>
                 <dd className="font-semibold text-gray-900">
-                  {customer.clientName}
+                  {customer?.clientName}
                 </dd>
               </div>
               <div>
                 <dt className="text-sm text-gray-600 font-medium">Phone:</dt>
                 <dd className="font-semibold text-gray-900">
-                  {customer.clientPhone}
+                  {customer?.clientPhone}
                 </dd>
               </div>
               <div>
                 <dt className="text-sm text-gray-600 font-medium">Address:</dt>
                 <dd className="font-semibold text-gray-900">
-                  {customer.clientAddress}
+                  {customer?.clientAddress}
                 </dd>
               </div>
               <div>
@@ -175,14 +175,14 @@ const CustomerInfo = () => {
                   Customer Since:
                 </dt>
                 <dd className="font-semibold text-gray-900">
-                  {customer.joiningDate}
+                  {customer?.joiningDate}
                 </dd>
               </div>
               <div>
                 <dt className="text-sm text-gray-600 font-medium">Due:</dt>
                 <dd className="font-bold text-red-500">
                   <CurrencyBangladeshiIcon className="h-5 w-5 inline-block mr-1 -mt-1" />
-                  {customer.clientDueAmount}
+                  {customer?.clientDueAmount}
                 </dd>
               </div>
               <div>
@@ -191,8 +191,8 @@ const CustomerInfo = () => {
                 </dt>
                 <dd className="font-semibold text-gray-900">
                   <CurrencyBangladeshiIcon className="h-5 w-5 inline-block mr-1 -mt-1" />
-                  {customer.lastTransactionAmount} on{" "}
-                  {customer.lastTransactionDate}
+                  {customer?.lastTransactionAmount} on{" "}
+                  {customer?.lastTransactionDate}
                 </dd>
               </div>
             </dl>
@@ -203,21 +203,21 @@ const CustomerInfo = () => {
         {customer?.clientDueAmount > 0 && (
           <div className="flex justify-end items-center gap-4 px-4 py-3 sm:px-6">
             <Link
-              to={`/printstatement/${customer.clientPhone}`}
+              to={`/printstatement/${customer?.clientPhone}`}
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
             >
               <DocumentIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
               Statement
             </Link>
             <Link
-              to={`/customerinfoupdate/${customer._id}`}
+              to={`/customerinfoupdate/${customer?._id}`}
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
             >
               <PencilIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
               Modify
             </Link>
             <Link
-              to={`/depositdues/${customer.clientPhone}`}
+              to={`/depositdues/${customer?.clientPhone}`}
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
             >
               <BanknotesIcon
@@ -244,7 +244,7 @@ const CustomerInfo = () => {
           <TabPanel>
             {histories.length > 0 ? (
               histories.map((history) => (
-                <History key={history._id} history={history} />
+                <History key={history?._id} history={history} />
               ))
             ) : (
               <p className="text-gray-500 text-center">
@@ -266,7 +266,7 @@ const CustomerInfo = () => {
                   </thead>
                   <tbody>
                     {deposits.map((deposit, indx) => (
-                      <tr className="border-b" key={deposit._id}>
+                      <tr className="border-b" key={deposit?._id}>
                         <td className="whitespace-nowrap px-6 py-4 font-medium text-center">
                           {indx + 1}
                         </td>
@@ -278,7 +278,7 @@ const CustomerInfo = () => {
                         </td>
                         <td className="whitespace-nowrap px-6 py-4 text-right font-semibold">
                           {/* <CurrencyBangladeshiIcon className="inline-block w-5 h-5 -mt-1" /> */}
-                          {deposit?.amount
+                          {parseFloat(deposit?.amount)
                             .toString()
                             .replace(
                               /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
